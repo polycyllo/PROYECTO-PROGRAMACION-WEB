@@ -4,11 +4,11 @@ export default function FormularioPage() {
   return (
 
     
-    <div className="flex justify-center h-screen items-center">    
-        <main className = "flex flex-col gap-[12px] md:flex md:flex-row md:gap-15 mt-[210px] md:mt-0">
+    <div className=" flex mt-12 lg:mt-0 lg:items-center justify-center h-screen ">    
+        <main className = " grid md:grid-cols-2 lg:grid-cols-3 gap-5 ">
                 <Link 
-                to="/FormularioPage" 
-                className=" border-2 md:p-40  p-20  rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
+                to="/CrearFormularioPage" 
+                className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-square-plus" width="84" height="84" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -21,7 +21,7 @@ export default function FormularioPage() {
            
                 <Link 
                 to="/FormularioPage" 
-                className=" border-2 md:p-40  p-20  rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
+                className="sombra p-24 md:p-36    rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-pencil-plus" width="84" height="84" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -35,7 +35,7 @@ export default function FormularioPage() {
            
                 <Link 
                 to="/FormularioPage" 
-                className=" border-2 md:p-40 p-20  rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
+                className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
                 >
                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-eye" width="84" height="84" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
