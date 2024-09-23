@@ -1,50 +1,33 @@
-# React + TypeScript + Vite
+# ezzForm
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ezzForm es una aplicación web diseñada para facilitar la creación de formularios personalizados de manera intuitiva. Los usuarios pueden registrarse, iniciar sesión y gestionar sus formularios de forma rápida y eficiente.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Página Principal**: Navega por la información principal de la plataforma y sus beneficios.
+- **Crear Cuenta**: Regístrate para acceder a la plataforma y comenzar a crear formularios.
+- **Iniciar Sesión**: Accede con tu cuenta para gestionar y crear formularios personalizados.
+- **Gestión de Formularios**: 
+  - Crear un nuevo formulario.
+  - Modificar formularios existentes.
+  - Visualizar formularios creados previamente.
+## Instalación
 
-## Expanding the ESLint configuration
+Sigue estos pasos para instalar y ejecutar ezzForm en tu entorno local.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Clona el repositorio:
+    ```bash 
+    git clone https://github.com/polycyllo/PROYECTO-PROGRAMACION-WEB.git
+    ```
+2. Navega a la carpeta del proyecto:
+    ```bash
+    cd PROYECTO-PROGRAMACION-WEB
+    ```
+3. Instala las dependencias:
+    ```bash
+    npm install
+    ```
+4. Inicia la aplicación:
+    ```bash
+    npm run dev
+    ```
