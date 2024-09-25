@@ -1,26 +1,22 @@
-import { useState, useRef } from "react";
 import CajaPregunta from "../components/CajaPregunta";
-import type { Pregunta } from "../types";
+import { Pregunta } from "../types";
 
-export default function CrearFormularioPage() {
-    const [caja, setCaja] = useState<Pregunta[]>([]);
-    const id = useRef(0);
-
-    const agregarPregunta = () => {
-        id.current += 1;
-        const nuevaPregunta: Pregunta = {
-            id: id.current,
-            pregunta: "INGRESE LA PREGUNTA",
-            respuesta: [],
-        };
-        setCaja([...caja, nuevaPregunta]);
-    };
+type CrearFomularioProps = {
+    caja: Pregunta[];
+    agregarPregunta: () => void;
+    eliminarPregunta: (id: Pregunta["id"]) => void;
+};
+export default function CrearFormularioPage({
+    caja,
+    agregarPregunta,
+    eliminarPregunta,
+}: CrearFomularioProps) {
     return (
         <div className="pt-24">
             <div className="flex flex-col lg:flex-row ">
                 <label
                     htmlFor="nombreFormularioLabel"
-                    className="  text-blakc uppercase font-extrabold text-lg text-center"
+                    className="  ml-10  text-blakc uppercase font-extrabold text-lg text-center"
                 >
                     Nombre del Formulario
                 </label>
@@ -33,13 +29,17 @@ export default function CrearFormularioPage() {
                 ></input>
             </div>
 
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center mt-8">
                 {caja.map((pregunta) => (
-                    <CajaPregunta key={id + 1} pregunta={pregunta} />
+                    <CajaPregunta
+                        key={pregunta.id}
+                        pregunta={pregunta}
+                        eliminarPregunta={eliminarPregunta}
+                    />
                 ))}
                 <button
                     className="flex justify-center lg:mx-96
-                                border-2 p-3 
+                                border-2 lg:p-3 
                                 bg-acento my-4 
                                 rounded-2xl 
                                 text-white 
