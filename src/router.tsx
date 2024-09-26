@@ -6,9 +6,10 @@ import Layout from './Layouts/Layout'
 import CrearCuentaPage from './pages/CrearCuentaPage'
 import FormularioPage from './pages/FormularioPage'
 import CrearFormularioPage from './pages/CrearFormularioPage'
+import ModificarFormularioPage from './pages/ModificarFormularioPage'
+import VerFormularioPage from './pages/VerFormularioPage'
 import { useListaPreguntas } from './hooks/useListaPreguntas'
 export default function AppRouter() {
-
 
     const {
         caja,
@@ -26,6 +27,8 @@ export default function AppRouter() {
                 <Route path='/FormularioPage' element={<FormularioPage/>}/>
                 <Route path='/CrearFormularioPage' element={<CrearFormularioPage caja={caja} 
                 agregarPregunta={agregarPregunta} eliminarPregunta={eliminarPregunta}/>}/>
+                <Route path='/ModificarFormularioPage' element={<ModificarFormularioPage/>}/>
+                <Route path='/VerFormularioPage' element={<VerFormularioPage/>}/>
             </Route>
         </Routes>
     </BrowserRouter>

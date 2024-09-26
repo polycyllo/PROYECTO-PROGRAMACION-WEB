@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 //https://uicolors.app/create
 export default function FormularioPage() {
     return (
-        <div className=" flex mt-12 lg:mt-0 lg:items-center justify-center h-screen ">
-            <main className=" grid md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+        <div className=" flex mt-24 lg:mt-0 lg:items-center justify-center h-screen ">
+            <main className=" grid md:grid-cols-2 lg:grid-cols-3 gap-5 mx-5">
                 <Link
                     to="/CrearFormularioPage"
                     className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
@@ -29,7 +29,7 @@ export default function FormularioPage() {
                 </Link>
 
                 <Link
-                    to="/FormularioPage"
+                    to="/ModificarFormularioPage"
                     className="sombra p-24 md:p-36    rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
                 >
                     <svg
@@ -54,7 +54,7 @@ export default function FormularioPage() {
                 </Link>
 
                 <Link
-                    to="/FormularioPage"
+                    to="/VerFormularioPage"
                     className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
                 >
                     <svg

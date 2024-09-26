@@ -29,7 +29,7 @@ export default function CrearFormularioPage({
                 ></input>
             </div>
 
-            <div className="flex flex-col justify-center mt-8">
+            <div className="flex flex-col justify-center mt-8 space-y-5">
                 {caja.map((pregunta) => (
                     <CajaPregunta
                         key={pregunta.id}

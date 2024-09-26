@@ -7,5 +7,10 @@ export type PreguntaRespuesta = {
 export type Pregunta = {
     id: number;
     pregunta: string;
-    respuesta: string[];
+    respuesta: Respuesta[];
 };
+
+export type Respuesta = {
+    id:number;
+    cadena:string;
+}

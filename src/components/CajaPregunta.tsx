@@ -1,4 +1,6 @@
-import { Pregunta } from "../types";
+import { useState, useRef } from 'react'
+import { Pregunta, Respuesta } from "../types";
+
 
 type PreguntaProps = {
     pregunta: Pregunta;
@@ -8,13 +10,37 @@ export default function CajaPregunta({
     pregunta,
     eliminarPregunta,
 }: PreguntaProps) {
-    return (
-        <div className="sombra mx-5">
-            <div className="flex flex-row items-center justify-between">
-                <p> PREGUNTA: {pregunta.id} </p>
 
-                <div>
-                    <button className="border-2 p-[2px] md:p-3 bg-acento my-4 rounded-2xl text-white uppercase font-bold">
+    const [cajaRespuesta,setCajaRespuesta] = useState<Respuesta[]>([])
+    const idResp = useRef(0)
+    function agregarRespuesta() {
+        idResp.current+=1;
+        const newRespuesta:Respuesta = {
+            id : idResp.current,
+            cadena:""
+        }
+
+        setCajaRespuesta([...cajaRespuesta,newRespuesta]);
+        pregunta.respuesta = cajaRespuesta;
+    }
+
+    function eliminarRespuesta(id:Respuesta["id"]){
+        const newCaja = cajaRespuesta.filter(resp => (resp.id!=id))
+        setCajaRespuesta(newCaja)
+    }
+    return (
+        <div className="caja mx-5 p-10 bg-[#fafafa] rounded-xl">
+            <div className="flex flex-row items-center justify-between">
+                <div className='w-full'> 
+                    <p>PREGUNTA: </p>
+                    <input type="text" className='font-bold text-1xl border border-black rounded-xl py-2 pl-4 w-full' placeholder='Ingrese pregunta'/>    
+                </div>
+
+                <div className="md:flex md:flex-row ml-3">
+                    <button className="border-2 p-[2px] md:p-3 bg-acento my-4 rounded-2xl text-white uppercase font-bold"
+                            onClick={() =>{
+                                agregarRespuesta()
+                            }}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="icon icon-tabler icon-tabler-pencil-plus"
@@ -60,6 +86,31 @@ export default function CajaPregunta({
                     </button>
                 </div>
             </div>
+
+            <div className='space-y-2'>
+                {
+                    cajaRespuesta.map((respuesta)=>(
+
+                        <div className='border border-black p-4 rounded-2xl flex'>
+                            <input type="text" className='font-semibold text-1xl border border-black rounded-xl py-2 pl-4 w-full' placeholder='Ingrese respuesta'></input>    
+                            <button
+                                className="flex justify-center
+                                border-black p-2 
+                                bg-acento  
+                                ml-3
+                                rounded-lg 
+                                text-white 
+                                font-bold
+                                hover:bg-primario 
+                                hover:text-black"
+                                onClick={() => eliminarRespuesta(respuesta.id)}>
+                                X
+                            </button>
+                        </div>    
+                    ))
+                }
+            </div>
+
         </div>
     );
 }

@@ -9,7 +9,7 @@ export const useListaPreguntas = () => {
         const nuevaPregunta: Pregunta = {
             id: id.current,
             pregunta: "INGRESE LA PREGUNTA",
-            respuesta: [],
+            respuesta: []
         };
         setCaja([...caja, nuevaPregunta]);
     };
@@ -18,6 +18,8 @@ export const useListaPreguntas = () => {
             prevCaja.filter((pregunta) => pregunta.id !== id)
         );
     }
+
+    
     return {
         id,
         caja,
