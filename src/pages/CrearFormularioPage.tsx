@@ -13,23 +13,25 @@ export default function CrearFormularioPage({
 }: CrearFomularioProps) {
     return (
         <div className="pt-24">
-            <div className="flex flex-col lg:flex-row ">
-                <label
-                    htmlFor="nombreFormularioLabel"
-                    className="  ml-10  text-blakc uppercase font-extrabold text-lg text-center"
-                >
-                    Nombre del Formulario
-                </label>
+            <div className="flex flex-col gap-3 py-5 text-2xl ">
+                
                 <input
                     id="nombreFormulario"
                     type="text"
                     name="nombreFomrulario"
-                    className="min-w-96 border border-black mx-5 rounded-lg focus:outline-none"
-                    placeholder="Ingrese nombre para el formulario"
+                    className="min-w-96 md:w-1/2  border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-bold"
+                    placeholder="Formulario sin titulo"
+                ></input>
+                <input
+                    id="descripcionFormulario"
+                    type="text"
+                    name="descripcionFormulario"
+                    className="min-w-96 md:w-1/2 border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-medium"
+                    placeholder="Ingresar descripcion Formulario"
                 ></input>
             </div>
 
-            <div className="flex flex-col justify-center mt-8 space-y-5">
+            <div className="flex flex-col justify-center mt-10 space-y-5">
                 {caja.map((pregunta) => (
                     <CajaPregunta
                         key={pregunta.id}
@@ -38,12 +40,12 @@ export default function CrearFormularioPage({
                     />
                 ))}
                 <button
-                    className="flex justify-center lg:mx-96
-                                border-2 lg:p-3 
+                    className="flex justify-center lg:mx-[450px]
+                                mx-4
+                                border-2 lg:p-1 
                                 bg-acento my-4 
                                 rounded-2xl 
                                 text-white 
-                                uppercase 
                                 font-bold
                                 hover:bg-primario 
                                 hover:text-black"
@@ -52,8 +54,8 @@ export default function CrearFormularioPage({
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="icon icon-tabler icon-tabler-circle-plus"
-                        width="92"
-                        height="92"
+                        width="90"
+                        height="90"
                         viewBox="0 0 24 24"
                         stroke-width="2"
                         stroke="#ffffff"
@@ -76,7 +78,7 @@ export default function CrearFormularioPage({
                         bg-acento my-4 
                         rounded-2xl 
                         text-white 
-                        uppercase 
+                        mx-4
                         font-bold
                       hover:bg-secundario2 
                       hover:text-black"
@@ -89,7 +91,7 @@ export default function CrearFormularioPage({
                             bg-acento md:my-4 
                             rounded-2xl 
                             text-white 
-                            uppercase 
+                            mx-4
                             font-bold
                             hover:bg-secundario1"
                 >

@@ -2,6 +2,8 @@ import { useState, useRef } from 'react'
 import { Pregunta, Respuesta } from "../types";
 
 
+
+
 type PreguntaProps = {
     pregunta: Pregunta;
     eliminarPregunta: (id: Pregunta["id"]) => void;
@@ -29,15 +31,24 @@ export default function CajaPregunta({
         setCajaRespuesta(newCaja)
     }
     return (
-        <div className="caja mx-5 p-10 bg-[#fafafa] rounded-xl">
+        <div className="caja mx-5 px-5 bg-[#fafafa] rounded-xl">
             <div className="flex flex-row items-center justify-between">
                 <div className='w-full'> 
-                    <p>PREGUNTA: </p>
-                    <input type="text" className='font-bold text-1xl border border-black rounded-xl py-2 pl-4 w-full' placeholder='Ingrese pregunta'/>    
+
+                    <input type="text" className='font-bold text-1xl border border-gray-500 rounded-xl py-2 pl-4 w-full' 
+                    placeholder='Ingresar pregunta'/>    
                 </div>
 
                 <div className="md:flex md:flex-row ml-3">
-                    <button className="border-2 p-[2px] md:p-3 bg-acento my-4 rounded-2xl text-white uppercase font-bold"
+                    <select className='mt-3 md:mt-6 h-8 md:mx-1 '>
+                        <option value="opcion1">Respuesta/parrafo </option>
+                        <option value="opcion2">Seleccion</option>
+                        <optgroup label="Más opciones">
+                        <option value="opcion3">Secuencia</option>
+                        
+                        </optgroup>
+                    </select>
+                    <button className="border-2 p-[2px] md:p-3 bg-acento my-2 rounded-2xl text-white"
                             onClick={() =>{
                                 agregarRespuesta()
                             }}>
@@ -62,7 +73,7 @@ export default function CajaPregunta({
                     </button>
 
                     <button
-                        className="border-2 p-[2px] md:p-3 bg-acento my-4 rounded-2xl text-white uppercase font-bold"
+                        className="border-2 p-[2px] md:p-3 bg-acento my-2 rounded-2xl text-white"
                         onClick={() => {
                             eliminarPregunta(pregunta.id);
                         }}
@@ -87,12 +98,12 @@ export default function CajaPregunta({
                 </div>
             </div>
 
-            <div className='space-y-2'>
+            <div className='space-y-3 pb-5'>
                 {
                     cajaRespuesta.map((respuesta)=>(
 
-                        <div className='border border-black p-4 rounded-2xl flex'>
-                            <input type="text" className='font-semibold text-1xl border border-black rounded-xl py-2 pl-4 w-full' placeholder='Ingrese respuesta'></input>    
+                        <div className='border border-gray-400 p-4 rounded-2xl flex'>
+                            <input type="text" className=' font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full' placeholder='Ingrese respuesta'></input>    
                             <button
                                 className="flex justify-center
                                 border-black p-2 
