@@ -31,16 +31,11 @@ export default function CajaPregunta({
         setCajaRespuesta(newCaja)
     }
     return (
-        <div className="caja mx-5 px-5 bg-[#fafafa] rounded-xl">
+        <div className="caja mx-5 px-5 bg-[#00AFFF] rounded-xl">
             <div className="flex flex-row items-center justify-between">
                 <div className='w-full'> 
-
-                    <input type="text" className='font-bold text-1xl border border-gray-500 rounded-xl py-2 pl-4 w-full' 
-                    placeholder='Ingresar pregunta'/>    
-                </div>
-
-                <div className="md:flex md:flex-row ml-3">
-                    <select className='mt-3 md:mt-6 h-8 md:mx-1 '>
+                
+                    <select className='mt-3 h-8 md:mx-1 mb-2 '>
                         <option value="opcion1">Respuesta/parrafo </option>
                         <option value="opcion2">Seleccion</option>
                         <optgroup label="Más opciones">
@@ -48,15 +43,24 @@ export default function CajaPregunta({
                         
                         </optgroup>
                     </select>
-                    <button className="border-2 p-[2px] md:p-3 bg-acento my-2 rounded-2xl text-white"
+
+                    <input type="text" className='mb-2 font-bold text-1xl border border-gray-500 rounded-xl py-2 pl-4 w-full' 
+                    placeholder='Ingresar pregunta'/>
+                    
+                        
+                </div>
+
+                <div className="flex flex-row ml-3 mt-10 gap-1">
+                    
+                    <button className="border-2 p-[2.5px]  bg-acento my-2 rounded-2xl text-white"
                             onClick={() =>{
                                 agregarRespuesta()
                             }}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="icon icon-tabler icon-tabler-pencil-plus"
-                            width="44"
-                            height="44"
+                            width="40"
+                            height="40"
                             viewBox="0 0 24 24"
                             stroke-width="2"
                             stroke="#ffffff"
@@ -73,7 +77,7 @@ export default function CajaPregunta({
                     </button>
 
                     <button
-                        className="border-2 p-[2px] md:p-3 bg-acento my-2 rounded-2xl text-white"
+                        className="border-2 p-[2.5px] bg-acento my-2 rounded-2xl text-white"
                         onClick={() => {
                             eliminarPregunta(pregunta.id);
                         }}
@@ -81,8 +85,8 @@ export default function CajaPregunta({
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="icon icon-tabler icon-tabler-square-rounded-x"
-                            width="44"
-                            height="44"
+                            width="40"
+                            height="40"
                             viewBox="0 0 24 24"
                             stroke-width="2"
                             stroke="#ffffff"
@@ -98,12 +102,13 @@ export default function CajaPregunta({
                 </div>
             </div>
 
-            <div className='space-y-3 pb-5'>
+            <div className=' pb-5'>
                 {
                     cajaRespuesta.map((respuesta)=>(
 
-                        <div className='border border-gray-400 p-4 rounded-2xl flex'>
-                            <input type="text" className=' font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full' placeholder='Ingrese respuesta'></input>    
+                        <div className='borde p-4 rounded-2xl flex'>
+                            <input type="text" className=' font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full' 
+                            placeholder='Ingrese respuesta'></input>    
                             <button
                                 className="flex justify-center
                                 border-black p-2 
@@ -112,7 +117,7 @@ export default function CajaPregunta({
                                 rounded-lg 
                                 text-white 
                                 font-bold
-                                hover:bg-primario 
+                                hover:bg-secundario1 
                                 hover:text-black"
                                 onClick={() => eliminarRespuesta(respuesta.id)}>
                                 X

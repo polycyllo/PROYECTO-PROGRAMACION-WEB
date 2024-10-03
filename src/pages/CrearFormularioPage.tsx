@@ -42,20 +42,21 @@ export default function CrearFormularioPage({
                 <button
                     className="flex justify-center lg:mx-[450px]
                                 mx-4
+                                h-16
                                 border-2 lg:p-1 
                                 bg-acento my-4 
                                 rounded-2xl 
                                 text-white 
                                 font-bold
-                                hover:bg-primario 
+                                hover:bg-secundario1 
                                 hover:text-black"
                     onClick={() => agregarPregunta()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="icon icon-tabler icon-tabler-circle-plus"
-                        width="90"
-                        height="90"
+                        width="55"
+                        height="55"
                         viewBox="0 0 24 24"
                         stroke-width="2"
                         stroke="#ffffff"
@@ -80,8 +81,9 @@ export default function CrearFormularioPage({
                         text-white 
                         mx-4
                         font-bold
-                      hover:bg-secundario2 
-                      hover:text-black"
+                      hover:bg-white
+                      hover:text-black
+                      hover: border-secundario1"
                 >
                     Guardar
                 </button>
@@ -93,7 +95,9 @@ export default function CrearFormularioPage({
                             text-white 
                             mx-4
                             font-bold
-                            hover:bg-secundario1"
+                            hover:bg-white
+                            hover:text-black
+                            hover: border-secundario1"
                 >
                     Cancelar
                 </button>

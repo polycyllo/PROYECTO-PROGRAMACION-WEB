@@ -2,11 +2,11 @@
 import Boton from '../components/Boton'
 export default function CrearCuentaPage() {
   return (
-    <section className="text-center grid justify-center ">
+    <section className="text-center grid justify-center">
             <h2 className="text-3xl font-bold my-10">Creando Cuenta</h2>
             <form className=" md:w-[510px] sombra mx-4 w-96">
                 <div className="flex flex-col space-y-4 ">
-                    <div className="text-start flex flex-col space-y-2">
+                    <div className="text-start flex flex-col space-y-3 mx-4">
                         <label 
                             htmlFor="Nombre"
                             className=" text-blakc uppercase font-extrabold text-lg"
