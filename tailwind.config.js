@@ -12,6 +12,9 @@ export default {
             secundario1: '#EB9001',
             secundario2: '#EBDA59',
             acento: '#EB3F07'
+        },
+        screens: {
+            xs : '360px'
         }
     },
   },
