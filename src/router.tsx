@@ -9,6 +9,7 @@ import CrearFormularioPage from './pages/CrearFormularioPage'
 import ModificarFormularioPage from './pages/ModificarFormularioPage'
 import VerFormularioPage from './pages/VerFormularioPage'
 import { useListaPreguntas } from './hooks/useListaPreguntas'
+import PerfilPage from './pages/PerfilPage'
 export default function AppRouter() {
 
     const {
@@ -29,6 +30,7 @@ export default function AppRouter() {
                 agregarPregunta={agregarPregunta} eliminarPregunta={eliminarPregunta}/>}/>
                 <Route path='/ModificarFormularioPage' element={<ModificarFormularioPage/>}/>
                 <Route path='/VerFormularioPage' element={<VerFormularioPage/>}/>
+                <Route path='/PerfilPage' element={<PerfilPage/>}/>
             </Route>
         </Routes>
     </BrowserRouter>
