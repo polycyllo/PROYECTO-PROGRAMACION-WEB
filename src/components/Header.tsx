@@ -19,11 +19,11 @@ export default function Header() {
                         width="50"
                         height="50"
                         viewBox="0 0 25 25"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="#ffffff"
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                     >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />

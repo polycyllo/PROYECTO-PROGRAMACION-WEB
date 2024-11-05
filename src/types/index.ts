@@ -1,3 +1,4 @@
+import { object, string } from "valibot";
 export type PreguntaRespuesta = {
     id: number;
     pregunta: string;
@@ -14,3 +15,8 @@ export type Respuesta = {
     id:number;
     cadena:string;
 }
+
+export const DraftSchema = object({
+    nombreformulario : string(),
+    descripcion : string()
+})

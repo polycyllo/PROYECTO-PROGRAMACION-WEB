@@ -1,81 +1,102 @@
-import { Link } from "react-router-dom";
-//https://uicolors.app/create
-export default function Formulario() {
+import CajaPregunta from "../components/CajaPregunta";
+import AgregarIcon from "../icons/agregar";
+import { Pregunta } from "../types";
+import { Form } from "react-router-dom";
+type CrearFomularioProps = {
+    caja: Pregunta[];
+    agregarPregunta: () => void;
+    eliminarPregunta: (id: Pregunta["id"]) => void;
+};
+
+
+
+
+
+export default function Formulario({
+    caja,
+    agregarPregunta,
+    eliminarPregunta,
+}: CrearFomularioProps) {
     return (
-        <div className=" flex mt-24 lg:mt-0 lg:items-center justify-center h-screen ">
-            <main className=" grid md:grid-cols-2 lg:grid-cols-3 gap-5 mx-5">
-                <Link
-                    to="/CrearFormularioPage"
-                    className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-square-plus"
-                        width="84"
-                        height="84"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="#ff4500"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M9 12h6" />
-                        <path d="M12 9v6" />
-                        <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
-                    </svg>
-                    Crear formulario
-                </Link>
+        <>
+        <Form className="pt-24" method="post">
+            <div className="flex flex-col gap-3 py-5 text-2xl ">
+                
+                <input
+                    id="nombreformulario"
+                    type="text"
+                    name="nombreformulario"
+                    className="min-w-96 md:w-1/2  border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-bold"
+                    placeholder="Formulario sin titulo"
+                ></input>
+                <input
+                    id="descripcion"
+                    type="text"
+                    name="descripcion"
+                    className="min-w-96 md:w-1/2 border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-medium"
+                    placeholder="Ingresar descripcion Formulario"
+                ></input>
+            </div>
 
-                <Link
-                    to="/ModificarFormularioPage"
-                    className="sombra p-24 md:p-36    rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
+            <div className="flex flex-col justify-center mt-10 space-y-5">
+                {caja.map((pregunta,index) => (
+                    <CajaPregunta
+                        key={pregunta.id}
+                        pregunta={pregunta}
+                        eliminarPregunta={eliminarPregunta}
+                        preguntaIndex={index}
+                    />
+                ))}
+                <button
+                    type="button"
+                    className="flex justify-center lg:mx-[450px]
+                                mx-4
+                                h-16
+                                border-2 lg:p-1 
+                                bg-acento my-4 
+                                rounded-2xl 
+                                text-white 
+                                font-bold
+                                hover:bg-secundario1 
+                                hover:text-black"
+                    onClick={() => agregarPregunta()}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-pencil-plus"
-                        width="84"
-                        height="84"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="#ff4500"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                        <path d="M13.5 6.5l4 4" />
-                        <path d="M16 19h6" />
-                        <path d="M19 16v6" />
-                    </svg>
-                    Modificar formulario
-                </Link>
+                <AgregarIcon/>
+                </button>
+            </div>
 
-                <Link
-                    to="/VerFormularioPage"
-                    className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
+            <div className=" flex flex-col md:flex-row justify-center  md:gap-10">
+                <button
+                    type="submit"
+                    className=" border-2 p-3 
+                        text-2xl
+                        bg-acento my-4 
+                        rounded-2xl 
+                        text-white 
+                        mx-4
+                        font-bold
+                      hover:bg-white
+                      hover:text-black
+                      hover: border-secundario1"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-eye"
-                        width="84"
-                        height="84"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="#ff4500"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                    </svg>
-                    ver formulario
-                </Link>
-            </main>
-        </div>
+                    Guardar
+                </button>
+                <button
+                    className=" border-2 p-3 
+                            text-2xl
+                            bg-acento md:my-4 
+                            rounded-2xl 
+                            text-white 
+                            mx-4
+                            font-bold
+                            hover:bg-white
+                            hover:text-black
+                            hover: border-secundario1"
+                >
+                    Cancelar
+                </button>
+            </div>
+        </Form>
+        </>
     );
 }
