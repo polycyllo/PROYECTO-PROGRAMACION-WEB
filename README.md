@@ -11,6 +11,9 @@ ezzForm es una aplicación web diseñada para facilitar la creación de formular
   - Crear un nuevo formulario.
   - Modificar formularios existentes.
   - Visualizar formularios creados previamente.
+
+## Diseño de la base de datos
+![disenioBD](./imagenes/disenioBD.PNG)
 ## Instalación
 
 Sigue estos pasos para instalar y ejecutar ezzForm en tu entorno local.
