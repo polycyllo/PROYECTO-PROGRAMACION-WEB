@@ -1,107 +1,53 @@
-import CajaPregunta from "../components/CajaPregunta";
-import { Pregunta } from "../types";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
+import Formulario from "../components/Formulario";
+import { useListaPreguntas } from "../hooks/useListaPreguntas";
+import { addFormulario } from "../services/FormularioServices";
 
-type CrearFomularioProps = {
-    caja: Pregunta[];
-    agregarPregunta: () => void;
-    eliminarPregunta: (id: Pregunta["id"]) => void;
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+    const formData = Object.fromEntries(await request.formData());
+
+    const nombreformulario = formData["nombreformulario"] as string;
+    const descripcion = formData["descripcion"] as string;
+
+    // Extraer y estructurar las preguntas y respuestas
+    const preguntas: any[] = [];
+    for (const [key, value] of Object.entries(formData)) {
+        const preguntaMatch = key.match(/^preguntas\[(\d+)\]\.pregunta$/);
+        const respuestaMatch = key.match(/^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.respuesta$/);
+
+        if (preguntaMatch) {
+            const index = Number(preguntaMatch[1]);
+            preguntas[index] = { pregunta: value, opciones: [] };
+        } else if (respuestaMatch) {
+            const [_, preguntaIndex, respuestaIndex] = respuestaMatch.map(Number);
+            if (preguntas[preguntaIndex]) {
+                preguntas[preguntaIndex].opciones[respuestaIndex] = { textoopcion: value };
+            }
+        }
+    }
+
+    // Llamar a la función `addFormulario` con todos los datos
+    try {
+        await addFormulario(nombreformulario, descripcion, preguntas);
+    } catch (error) {
+        console.error("Error al enviar formulario:", error);
+    }
+
+    return redirect('/FormularioPage');
 };
-export default function CrearFormularioPage({
-    caja,
-    agregarPregunta,
-    eliminarPregunta,
-}: CrearFomularioProps) {
+
+
+export default function CrearFormularioPage() {
+    //const error = useActionData()
+    
+    const { caja, agregarPregunta, eliminarPregunta} = useListaPreguntas()
     return (
-        <div className="pt-24">
-            <div className="flex flex-col gap-3 py-5 text-2xl ">
-                
-                <input
-                    id="nombreFormulario"
-                    type="text"
-                    name="nombreFomrulario"
-                    className="min-w-96 md:w-1/2  border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-bold"
-                    placeholder="Formulario sin titulo"
-                ></input>
-                <input
-                    id="descripcionFormulario"
-                    type="text"
-                    name="descripcionFormulario"
-                    className="min-w-96 md:w-1/2 border border-gray-600 mx-auto rounded-lg focus:outline-none p-2 font-medium"
-                    placeholder="Ingresar descripcion Formulario"
-                ></input>
-            </div>
 
-            <div className="flex flex-col justify-center mt-10 space-y-5">
-                {caja.map((pregunta) => (
-                    <CajaPregunta
-                        key={pregunta.id}
-                        pregunta={pregunta}
-                        eliminarPregunta={eliminarPregunta}
-                    />
-                ))}
-                <button
-                    className="flex justify-center lg:mx-[450px]
-                                mx-4
-                                h-16
-                                border-2 lg:p-1 
-                                bg-acento my-4 
-                                rounded-2xl 
-                                text-white 
-                                font-bold
-                                hover:bg-secundario1 
-                                hover:text-black"
-                    onClick={() => agregarPregunta()}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-circle-plus"
-                        width="55"
-                        height="55"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="#ffffff"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                        <path d="M9 12h6" />
-                        <path d="M12 9v6" />
-                    </svg>
-                </button>
-            </div>
-
-            <div className=" flex flex-col md:flex-row justify-center  md:gap-10">
-                <button
-                    className=" border-2 p-3 
-                        text-2xl
-                        bg-acento my-4 
-                        rounded-2xl 
-                        text-white 
-                        mx-4
-                        font-bold
-                      hover:bg-white
-                      hover:text-black
-                      hover: border-secundario1"
-                >
-                    Guardar
-                </button>
-                <button
-                    className=" border-2 p-3 
-                            text-2xl
-                            bg-acento md:my-4 
-                            rounded-2xl 
-                            text-white 
-                            mx-4
-                            font-bold
-                            hover:bg-white
-                            hover:text-black
-                            hover: border-secundario1"
-                >
-                    Cancelar
-                </button>
-            </div>
-        </div>
+        <Formulario
+            caja={caja}
+            agregarPregunta={agregarPregunta}
+            eliminarPregunta={eliminarPregunta}
+        />
     );
 }

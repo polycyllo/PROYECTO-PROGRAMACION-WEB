@@ -1,16 +1,20 @@
 import { useState, useRef } from 'react'
 import { Pregunta, Respuesta } from "../types";
-
-
+import CerrarIcon from '../icons/cerrar';
+import EditarIcon from '../icons/editar';
 
 
 type PreguntaProps = {
     pregunta: Pregunta;
     eliminarPregunta: (id: Pregunta["id"]) => void;
+    preguntaIndex: number;
 };
+
+
 export default function CajaPregunta({
     pregunta,
     eliminarPregunta,
+    preguntaIndex
 }: PreguntaProps) {
 
     const [cajaRespuesta,setCajaRespuesta] = useState<Respuesta[]>([])
@@ -44,72 +48,49 @@ export default function CajaPregunta({
                         </optgroup>
                     </select>
 
-                    <input type="text" className='mb-2 font-bold text-1xl border border-gray-500 rounded-xl py-2 pl-4 w-full' 
-                    placeholder='Ingresar pregunta'/>
+                    <input 
+                        name={`preguntas[${preguntaIndex}].pregunta`}
+                        type="text" 
+                        className='mb-2 font-bold text-1xl border border-gray-500 rounded-xl py-2 pl-4 w-full' 
+                        placeholder='Ingresar pregunta'/>
                     
                         
                 </div>
 
                 <div className="flex flex-row ml-3 mt-10 gap-1">
                     
-                    <button className="border-2 p-[2.5px]  bg-acento my-2 rounded-2xl text-white"
+                    <button 
+                        type='button'
+                        className="border-2 p-[2.5px]  bg-acento my-2 rounded-2xl text-white"
                             onClick={() =>{
                                 agregarRespuesta()
                             }}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-pencil-plus"
-                            width="40"
-                            height="40"
-                            viewBox="0 0 24 24"
-                            stroke-width="2"
-                            stroke="#ffffff"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-                            <path d="M13.5 6.5l4 4" />
-                            <path d="M16 19h6" />
-                            <path d="M19 16v6" />
-                        </svg>
+                    <EditarIcon/>
                     </button>
 
                     <button
+                        type='button'
                         className="border-2 p-[2.5px] bg-acento my-2 rounded-2xl text-white"
                         onClick={() => {
                             eliminarPregunta(pregunta.id);
                         }}
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-square-rounded-x"
-                            width="40"
-                            height="40"
-                            viewBox="0 0 24 24"
-                            stroke-width="2"
-                            stroke="#ffffff"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M10 10l4 4m0 -4l-4 4" />
-                            <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                        </svg>
+                    <CerrarIcon/>
                     </button>
                 </div>
             </div>
 
             <div className=' pb-5'>
                 {
-                    cajaRespuesta.map((respuesta)=>(
+                    cajaRespuesta.map((respuesta,respIndex)=>(
 
-                        <div className='borde p-4 rounded-2xl flex'>
-                            <input type="text" className=' font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full' 
+                        <div  key={respuesta.id} className='borde p-4 rounded-2xl flex'>
+                            <input 
+                            name={`preguntas[${preguntaIndex}].respuestas[${respIndex}].respuesta`}
+                            type="text" className=' font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full' 
                             placeholder='Ingrese respuesta'></input>    
                             <button
+                                type='button'
                                 className="flex justify-center
                                 border-black p-2 
                                 bg-acento  
