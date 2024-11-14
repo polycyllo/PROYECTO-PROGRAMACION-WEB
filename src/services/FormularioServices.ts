@@ -12,7 +12,7 @@ export async function addFormulario(nombreformulario: string, descripcion: strin
     };
 
     const url = 'http://localhost:4000/api/formulario';
-   
+        console.log(dataR)
         const response = await axios.post(url, dataR);
         return response.data;
     
