@@ -1,5 +1,5 @@
 
-import Boton from '../components/Boton'
+import Boton from '../../components/Boton'
 export default function CrearCuentaPage() {
   return (
     <section className="text-center grid justify-center">

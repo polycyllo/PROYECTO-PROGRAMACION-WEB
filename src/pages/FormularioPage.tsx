@@ -23,7 +23,7 @@ export default function FormularioPage() {
             </Link>
 
             <Link
-                to="/VerFormularioPage"
+                to="/VerFormulariosPage"
                 className="sombra p-24 md:p-36 rounded-2xl text-black uppercase font-bold flex flex-col items-center justify-center"
             >
                 <VerIcon/>

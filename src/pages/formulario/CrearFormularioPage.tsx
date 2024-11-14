@@ -1,12 +1,13 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import Formulario from "../components/Formulario";
-import { useListaPreguntas } from "../hooks/useListaPreguntas";
-import { addFormulario } from "../services/FormularioServices";
+import Formulario from "../../components/Formulario";
+import { useListaPreguntas } from "../../hooks/useListaPreguntas";
+import { addFormulario } from "../../services/FormularioServices";
 
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+    
     const formData = Object.fromEntries(await request.formData());
-
+    console.log(formData)
     const nombreformulario = formData["nombreformulario"] as string;
     const descripcion = formData["descripcion"] as string;
 
@@ -14,20 +15,34 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const preguntas: any[] = [];
     for (const [key, value] of Object.entries(formData)) {
         const preguntaMatch = key.match(/^preguntas\[(\d+)\]\.pregunta$/);
-        const respuestaMatch = key.match(/^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.respuesta$/);
-
+        
         if (preguntaMatch) {
             const index = Number(preguntaMatch[1]);
             preguntas[index] = { pregunta: value, opciones: [] };
-        } else if (respuestaMatch) {
-            const [_, preguntaIndex, respuestaIndex] = respuestaMatch.map(Number);
-            if (preguntas[preguntaIndex]) {
-                preguntas[preguntaIndex].opciones[respuestaIndex] = { textoopcion: value };
+        }
+        const respuestaMatch = key.match(/^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.(respuesta|esrespuesta)$/);
+
+        if (respuestaMatch) {
+            const [_, preguntaIndex, respuestaIndex, field] = respuestaMatch;
+        
+            const pIndex = Number(preguntaIndex);
+            const rIndex = Number(respuestaIndex);
+        
+            if (!preguntas[pIndex]) {
+                preguntas[pIndex] = { pregunta: '', opciones: [] };  // Asegurarse de que la pregunta exista
+            }
+            if (!preguntas[pIndex].opciones[rIndex]) {
+                preguntas[pIndex].opciones[rIndex] = { textoopcion: '', esrespuesta: false };  // Asegurarse de que la opción exista
+            }
+        
+            if (field === 'respuesta') {
+                preguntas[pIndex].opciones[rIndex].textoopcion = value;
+            } else if (field === 'esrespuesta') {
+                preguntas[pIndex].opciones[rIndex].esrespuesta = value === "true";
             }
         }
     }
 
-    // Llamar a la función `addFormulario` con todos los datos
     try {
         await addFormulario(nombreformulario, descripcion, preguntas);
     } catch (error) {
@@ -39,7 +54,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 
 export default function CrearFormularioPage() {
-    //const error = useActionData()
     
     const { caja, agregarPregunta, eliminarPregunta} = useListaPreguntas()
     return (

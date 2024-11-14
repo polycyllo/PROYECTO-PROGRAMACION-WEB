@@ -1,4 +1,4 @@
-import Boton from "../components/Boton";
+import Boton from "../../components/Boton";
 
 export default function LoginPage() {
   return (
