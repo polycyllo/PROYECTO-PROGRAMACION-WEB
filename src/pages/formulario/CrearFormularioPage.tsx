@@ -9,7 +9,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const nombreformulario = formData["nombreformulario"] as string;
     const descripcion = formData["descripcion"] as string;
 
-    // Extraer y estructurar las preguntas y respuestas
     const preguntas: any[] = [];
     for (const [key, value] of Object.entries(formData)) {
         const preguntaMatch = key.match(/^preguntas\[(\d+)\]\.pregunta$/);
@@ -29,7 +28,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
             const rIndex = Number(respuestaIndex);
 
             if (!preguntas[pIndex]) {
-                preguntas[pIndex] = { pregunta: "", opciones: [] }; // Asegurarse de que la pregunta exista
+                preguntas[pIndex] = { pregunta: "", opciones: [] };
             }
             if (!preguntas[pIndex].opciones[rIndex]) {
                 preguntas[pIndex].opciones[rIndex] = {

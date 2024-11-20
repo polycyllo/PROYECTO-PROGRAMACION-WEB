@@ -43,6 +43,7 @@ export default function Formulario({
             const nombreformulario = formObject["nombreformulario"] as string;
             const descripcion = formObject["descripcion"] as string;
 
+            // Extraer y estructurar las preguntas y respuestas
             const preguntas: any[] = [];
             for (const [key, value] of Object.entries(formObject)) {
                 const preguntaMatch = key.match(
@@ -65,13 +66,13 @@ export default function Formulario({
                     const rIndex = Number(respuestaIndex);
 
                     if (!preguntas[pIndex]) {
-                        preguntas[pIndex] = { pregunta: "", opciones: [] };
+                        preguntas[pIndex] = { pregunta: "", opciones: [] }; // Asegurarse de que la pregunta exista
                     }
                     if (!preguntas[pIndex].opciones[rIndex]) {
                         preguntas[pIndex].opciones[rIndex] = {
                             textoopcion: "",
                             esrespuesta: false,
-                        };
+                        }; // Asegurarse de que la opción exista
                     }
 
                     if (field === "respuesta") {
@@ -85,7 +86,7 @@ export default function Formulario({
 
             try {
                 await addFormulario(nombreformulario, descripcion, preguntas);
-                navigate("/FormularioPage");
+                navigate("/FormularioPage"); // Redirigir después de guardar
             } catch (error) {
                 console.error("Error al enviar el formulario:", error);
             }

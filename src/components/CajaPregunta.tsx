@@ -16,6 +16,7 @@ export default function CajaPregunta({
 }: PreguntaProps) {
     const [tipoRespuesta, setTipoRespuesta] = useState("seleccion_multiple");
 
+    // Manejar el cambio del valor seleccionado
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         console.log("este valor pa ", e.target.value);
         setTipoRespuesta(e.target.value);
@@ -84,6 +85,9 @@ export default function CajaPregunta({
                         onChange={handleSelectChange}
                         className="mt-3 h-8 md:mx-1 mb-2"
                     >
+                        {/* <option value="a" disabled selected className='bg-neutral-300'>
+                            agregar tipo de respuestas
+                        </option> */}
                         <option value="seleccion_multiple">
                             Seleccion multiple
                         </option>
