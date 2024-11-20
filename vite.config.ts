@@ -5,10 +5,10 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: true, // Permite que el servidor esté disponible en la red local
-    port: 5173, // Asegúrate de que el puerto coincida con el de tu aplicación
+    host: true, 
+    port: 5173,
     hmr: {
-      protocol: 'ws', // Asegura que se utilice WebSocket para HMR
+      protocol: 'ws', 
       host: 'localhost',
     },
   },

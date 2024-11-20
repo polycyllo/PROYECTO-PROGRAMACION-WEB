@@ -3,11 +3,9 @@ import Formulario from "../../components/Formulario";
 import { useListaPreguntas } from "../../hooks/useListaPreguntas";
 import { addFormulario } from "../../services/FormularioServices";
 
-
 export const action = async ({ request }: ActionFunctionArgs) => {
-    
     const formData = Object.fromEntries(await request.formData());
-    console.log(formData)
+    console.log(formData);
     const nombreformulario = formData["nombreformulario"] as string;
     const descripcion = formData["descripcion"] as string;
 
@@ -15,30 +13,36 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const preguntas: any[] = [];
     for (const [key, value] of Object.entries(formData)) {
         const preguntaMatch = key.match(/^preguntas\[(\d+)\]\.pregunta$/);
-        
+
         if (preguntaMatch) {
             const index = Number(preguntaMatch[1]);
             preguntas[index] = { pregunta: value, opciones: [] };
         }
-        const respuestaMatch = key.match(/^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.(respuesta|esrespuesta)$/);
+        const respuestaMatch = key.match(
+            /^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.(respuesta|esrespuesta)$/
+        );
 
         if (respuestaMatch) {
             const [_, preguntaIndex, respuestaIndex, field] = respuestaMatch;
-        
+
             const pIndex = Number(preguntaIndex);
             const rIndex = Number(respuestaIndex);
-        
+
             if (!preguntas[pIndex]) {
-                preguntas[pIndex] = { pregunta: '', opciones: [] };  // Asegurarse de que la pregunta exista
+                preguntas[pIndex] = { pregunta: "", opciones: [] }; // Asegurarse de que la pregunta exista
             }
             if (!preguntas[pIndex].opciones[rIndex]) {
-                preguntas[pIndex].opciones[rIndex] = { textoopcion: '', esrespuesta: false };  // Asegurarse de que la opción exista
+                preguntas[pIndex].opciones[rIndex] = {
+                    textoopcion: "",
+                    esrespuesta: false,
+                };
             }
-        
-            if (field === 'respuesta') {
+
+            if (field === "respuesta") {
                 preguntas[pIndex].opciones[rIndex].textoopcion = value;
-            } else if (field === 'esrespuesta') {
-                preguntas[pIndex].opciones[rIndex].esrespuesta = value === "true";
+            } else if (field === "esrespuesta") {
+                preguntas[pIndex].opciones[rIndex].esrespuesta =
+                    value === "true";
             }
         }
     }
@@ -49,15 +53,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         console.error("Error al enviar formulario:", error);
     }
 
-    return redirect('/FormularioPage');
+    return redirect("/FormularioPage");
 };
 
-
 export default function CrearFormularioPage() {
-    
-    const { caja, agregarPregunta, eliminarPregunta} = useListaPreguntas()
+    const { caja, agregarPregunta, eliminarPregunta } = useListaPreguntas();
     return (
-
         <Formulario
             caja={caja}
             agregarPregunta={agregarPregunta}
