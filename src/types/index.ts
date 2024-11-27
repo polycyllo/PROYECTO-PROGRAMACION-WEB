@@ -77,10 +77,11 @@ export const authSchema = object({
     correoelectronico: string(),
     contrasenia: string(),
     contrasenia_confirmada: string(),
+    token: string(),
 });
 
 export type Auth = InferOutput<typeof authSchema>;
-
+export type ConfirmToken = Pick<Auth, "token">;
 export type UsuarioLogin = Pick<Auth, "correoelectronico" | "contrasenia">;
 export type UsuarioRegistrationForm = Pick<
     Auth,
@@ -90,3 +91,4 @@ export type UsuarioRegistrationForm = Pick<
     | "contrasenia"
     | "contrasenia_confirmada"
 >;
+export type RequestConfirmation = Pick<Auth, "correoelectronico">;

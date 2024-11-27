@@ -16,6 +16,8 @@ import VerFormularioPage from "./pages/formulario/VerFormularioPage";
 import AuthLayout from "./Layouts/AuthLayout";
 import LoginView from "./pages/auth/LoginView";
 import RegisterView from "./pages/auth/RegisterView";
+import ConfirmAccount from "./pages/auth/ConfirmAccount";
+import RequestNewCode from "./pages/auth/RequestNewCode";
 
 export const router = createBrowserRouter([
     {
@@ -73,6 +75,14 @@ export const router = createBrowserRouter([
             {
                 path: "/auth/register",
                 element: <RegisterView />,
+            },
+            {
+                path: "/auth/confirm-account",
+                element: <ConfirmAccount />,
+            },
+            {
+                path: "/auth/request-code",
+                element: <RequestNewCode />,
             },
         ],
     },

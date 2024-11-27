@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 export default function LoginView() {
     const iniVal: UsuarioLogin = {
-        email: "",
-        password: "",
+        correoelectronico: "",
+        contrasenia: "",
     };
     const {
         register,
@@ -18,7 +18,7 @@ export default function LoginView() {
     return (
         <>
             <form
-                className="bg-white mx-4 p-10 "
+                className="bg-white mx-4 p-10 mt-20"
                 onSubmit={handleSubmit(handleLogin)}
                 noValidate
             >
@@ -32,7 +32,7 @@ export default function LoginView() {
                                 type="email"
                                 className="border border-black p-2 w-full rounded-lg focus:outline-none"
                                 placeholder="Correo electronico. Ej. abc@gmail.com"
-                                {...register("email", {
+                                {...register("correoelectronico", {
                                     required: "El Email es Obligatorio",
                                     pattern: {
                                         value: /\S+@\S+\.\S+/,
@@ -40,9 +40,9 @@ export default function LoginView() {
                                     },
                                 })}
                             />
-                            {errors.email && (
+                            {errors.correoelectronico && (
                                 <span className="text-red-600 text-sm">
-                                    {errors.email.message as string}
+                                    {errors.correoelectronico.message as string}
                                 </span>
                             )}
                         </div>
@@ -55,13 +55,13 @@ export default function LoginView() {
                                 type="password"
                                 className="border border-black p-2 w-full rounded-lg focus:outline-none"
                                 placeholder="Ingrese contraseña"
-                                {...register("password", {
+                                {...register("contrasenia", {
                                     required: "La contraseña es obligatoria",
                                 })}
                             />
-                            {errors.password && (
+                            {errors.contrasenia && (
                                 <span className="text-red-600 text-sm">
-                                    {errors.password.message as string}
+                                    {errors.contrasenia.message as string}
                                 </span>
                             )}
                         </div>
