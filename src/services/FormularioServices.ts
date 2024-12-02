@@ -1,29 +1,48 @@
 import axios from "axios";
 
-import { FormularioCSchema, FormulariosSchema, Pregunta } from "../types";
+import { FormularioCSchema, FormulariosSchema, PreguntaS } from "../types";
 import { safeParse } from "valibot";
+import Cookies from "js-cookie";
+import { isAxiosError } from "axios";
 
 export async function addFormulario(
     nombreformulario: string,
     descripcion: string,
-    preguntas: Pregunta[]
+    preguntas: {
+        pregunta: string;
+        opciones: {
+            textoopcion: string;
+            esrespuesta: boolean;
+        }[];
+    }[]
 ) {
     const dataR = {
-        nombreformulario: nombreformulario,
-        descripcion: descripcion,
-        preguntas: preguntas,
+        nombreformulario,
+        descripcion,
+        preguntas,
     };
 
+    const token = Cookies.get("authToken");
     const url = `${import.meta.env.VITE_APIT_URL}/api/formulario`;
-    console.log(dataR);
-    const response = await axios.post(url, dataR);
+
+    const response = await axios.post(url, dataR, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
     return response.data;
 }
 
 export async function getNameFormularios() {
     try {
         const url = `${import.meta.env.VITE_APIT_URL}/api/formulario`;
-        const { data } = await axios(url);
+        const token = Cookies.get("authToken");
+        const { data } = await axios(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         const result = safeParse(FormulariosSchema, data.data);
         if (result.success) {
             return result.output;
@@ -38,7 +57,12 @@ export async function getNameFormularios() {
 export async function getFormularioById(id: number) {
     try {
         const url = `${import.meta.env.VITE_APIT_URL}/api/formulario/${id}`;
-        const { data } = await axios.get(url);
+        const token = Cookies.get("authToken");
+        const { data } = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
         const result = safeParse(FormularioCSchema, data.data);
         if (result.success) {
             return result.output;
@@ -49,5 +73,52 @@ export async function getFormularioById(id: number) {
         return data.data;
     } catch (error) {
         console.log(error);
+    }
+}
+
+export async function getUser() {
+    try {
+        const url = `${import.meta.env.VITE_APIT_URL}/api/auth/user`;
+        const token = Cookies.get("authToken");
+
+        const { data } = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        // console.log("datoss ya pues", data);
+
+        //const result = safeParse(userSchema, data);
+        //console.log("valores  ", result.output);
+        // if (result.success) {
+        //     return result.output;
+        // } else {
+        //     console.log("error de byID");
+        //     throw new Error("Hubo un error para obtener un form especifico");
+        // }
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function getUserInfo() {
+    try {
+        const url = `${import.meta.env.VITE_APIT_URL}/api/auth/user`;
+        const token = Cookies.get("authToken");
+
+        const { data } = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
     }
 }

@@ -4,14 +4,12 @@ export const useListaPreguntas = () => {
     const [caja, setCaja] = useState<Pregunta[]>([]);
     const id = useRef(0);
 
-
-    
     const agregarPregunta = (): void => {
         id.current += 1;
         const nuevaPregunta: Pregunta = {
             id: id.current,
             pregunta: "INGRESE LA PREGUNTA",
-            respuesta: []
+            opcion: [],
         };
         setCaja([...caja, nuevaPregunta]);
     };
@@ -21,7 +19,6 @@ export const useListaPreguntas = () => {
         );
     }
 
-    
     return {
         id,
         caja,

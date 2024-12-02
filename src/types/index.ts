@@ -1,12 +1,4 @@
-import {
-    boolean,
-    number,
-    object,
-    string,
-    InferOutput,
-    array,
-    email,
-} from "valibot";
+import { boolean, number, object, string, InferOutput, array } from "valibot";
 
 export type FormValues = {
     preguntas: {
@@ -22,23 +14,6 @@ export type PreguntaRespuesta = {
     pregunta: string;
     respuesta: string;
 };
-
-export type Pregunta = {
-    id: number;
-    pregunta: string;
-    opcion: Respuesta[];
-};
-
-export type Respuesta = {
-    id: number;
-    cadena: string;
-    esrespuesta: boolean;
-};
-
-export const DraftSchema = object({
-    nombreformulario: string(),
-    descripcion: string(),
-});
 
 export const FormularioSchema = object({
     codformulario: number(),
@@ -92,3 +67,11 @@ export type UsuarioRegistrationForm = Pick<
     | "contrasenia_confirmada"
 >;
 export type RequestConfirmation = Pick<Auth, "correoelectronico">;
+
+export const userSchema = Object({
+    codusuario: number(),
+    nombre: string(),
+    apellido: string(),
+    correoelectronico: string(),
+});
+export type Usuario = InferOutput<typeof userSchema>;

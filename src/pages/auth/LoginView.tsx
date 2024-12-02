@@ -1,20 +1,37 @@
 import { useForm } from "react-hook-form";
-
 import { UsuarioLogin } from "../../types";
-import { Link } from "react-router-dom";
-
+import { Link, redirect, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../../api/AuthAPI";
+import { toast } from "react-toastify";
 export default function LoginView() {
     const iniVal: UsuarioLogin = {
         correoelectronico: "",
         contrasenia: "",
     };
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ defaultValues: iniVal });
 
-    const handleLogin = (formData: UsuarioLogin) => {};
+    const { mutate } = useMutation({
+        mutationFn: loginUser,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: () => {
+            toast.success("Iniciando sesión");
+
+            navigate("/");
+            //window.location.href = "/";
+        },
+    });
+
+    const handleLogin = (formData: UsuarioLogin) => {
+        mutate(formData);
+    };
     return (
         <>
             <form
