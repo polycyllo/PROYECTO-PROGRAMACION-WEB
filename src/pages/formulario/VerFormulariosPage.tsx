@@ -4,11 +4,23 @@ import { useLoaderData } from "react-router-dom";
 import { Formulario } from "../../types";
 
 export async function loader() {
-    const formuarios = await getNameFormularios();
-    return formuarios;
+    const formularios = await getNameFormularios();
+    return formularios || [];
 }
+
 export default function VerFormulariosPage() {
     const formulario = useLoaderData() as Formulario[];
+
+    if (!formulario || formulario.length === 0) {
+        // Muestra un mensaje si no hay formularios
+        return (
+            <div className="mt-32 text-center">
+                <p className="text-gray-600 text-lg">
+                    No hay formularios disponibles.
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="mt-32 ">
@@ -19,7 +31,7 @@ export default function VerFormulariosPage() {
                         codformulario={form.codformulario}
                         nombreformulario={form.nombreformulario}
                         descripcion={form.descripcion}
-                        text="Ver mas"
+                        text="Ver más"
                     />
                 ))}
             </div>

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { UsuarioRegistrationForm } from "../../types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createAccount } from "../../api/AuthAPI";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ export default function RegisterView() {
         reset,
         formState: { errors },
     } = useForm<UsuarioRegistrationForm>({ defaultValues: iniVal });
-
+    const navigate = useNavigate();
     const password = watch("contrasenia");
     const { mutate } = useMutation({
         mutationFn: createAccount,
@@ -30,6 +30,7 @@ export default function RegisterView() {
         onSuccess: (data) => {
             toast.success(data);
             reset();
+            navigate("/auth/login");
         },
     });
     const handleRegister = (formData: UsuarioRegistrationForm) => {

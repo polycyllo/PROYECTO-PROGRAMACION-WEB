@@ -1,7 +1,18 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 export default function SideBard() {
     const [open, setOpen] = useState(false);
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const logout = () => {
+        Cookies.remove("authToken");
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        localStorage.clear();
+        sessionStorage.clear();
+        navigate("/auth/login");
+    };
     return (
         <div className=" ">
             <button className="ml-4" onClick={() => setOpen(true)}>
@@ -25,6 +36,7 @@ export default function SideBard() {
                 className={` ${
                     !open && "hidden"
                 } bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm`}
+                onClick={() => setOpen(false)}
             ></div>
 
             <div
@@ -75,6 +87,13 @@ export default function SideBard() {
                         >
                             Acerca de
                         </Link>
+                        <button
+                            className=" font-bold text-center text-white text-xl hover:bg-acento 
+                    cursor-pointer py-3"
+                            onClick={logout}
+                        >
+                            Cerrar sesión
+                        </button>
                     </div>
                 </div>
             </div>

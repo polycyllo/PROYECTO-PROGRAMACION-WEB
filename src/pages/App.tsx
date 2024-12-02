@@ -12,7 +12,7 @@ function App() {
                 />
             </div>
             <div className="flex justify-center">
-                <Boton1 enlace="LoginPage" titulo="empezar" />
+                <Boton1 enlace="FormularioPage" titulo="empezar" />
             </div>
             <h1 className="text-center font-extrabold text-3xl">
                 Sobre ezzForm
@@ -23,10 +23,6 @@ function App() {
                     <PreguntaRespuesta key={item.id} item={item} />
                 ))}
             </main>
-
-            <div className="flex justify-center">
-                <Boton1 enlace="LoginPage" titulo="iniciar sesion" />
-            </div>
 
             <footer className=" bg-secundario1 py-5 grid justify-center">
                 <p className="text-white text-center">

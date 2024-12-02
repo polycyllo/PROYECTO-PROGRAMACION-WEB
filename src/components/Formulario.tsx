@@ -1,104 +1,94 @@
 import CajaPregunta from "../components/CajaPregunta";
 import AgregarIcon from "../icons/agregar";
-import { Pregunta } from "../types";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { addFormulario } from "../services/FormularioServices";
 
-type CrearFomularioProps = {
-    caja: Pregunta[];
-    agregarPregunta: () => void;
-    eliminarPregunta: (id: Pregunta["id"]) => void;
+type FormData = {
+    nombreformulario: string;
+    descripcion: string;
+    preguntas: {
+        pregunta: string;
+        opciones: {
+            textoopcion: string;
+            esrespuesta: boolean;
+        }[];
+    }[];
 };
 
-export default function Formulario({
-    caja,
-    agregarPregunta,
-    eliminarPregunta,
-}: CrearFomularioProps) {
+export default function Formulario() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate();
 
     const openModal = () => setIsModalVisible(true);
     const closeModal = () => setIsModalVisible(false);
 
+    const {
+        register,
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormData>({
+        defaultValues: {
+            nombreformulario: "",
+            descripcion: "",
+            preguntas: [
+                {
+                    pregunta: "",
+                    opciones: [{ textoopcion: "", esrespuesta: false }],
+                },
+            ],
+        },
+    });
+
+    const {
+        fields: preguntas,
+        append: addPregunta,
+        remove: removePregunta,
+    } = useFieldArray({
+        control,
+        name: "preguntas",
+    });
     const confirmCancel = () => {
         setIsModalVisible(false);
         navigate("/FormularioPage");
     };
+    const onSubmit = async (data: FormData) => {
+        try {
+            console.log("Datos del formulario:", data);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+            const datosFormulario = {
+                nombreformulario: data.nombreformulario,
+                descripcion: data.descripcion,
+                preguntas: data.preguntas.map((pregunta) => ({
+                    pregunta: pregunta.pregunta,
+                    opciones: pregunta.opciones.map((opcion) => ({
+                        textoopcion: opcion.textoopcion,
+                        esrespuesta: opcion.esrespuesta,
+                    })),
+                })),
+            };
 
-    const handleGuardarClick = async () => {
-        const formElement = document.querySelector("form");
-        if (formElement) {
-            const formData = new FormData(formElement);
-            const formObject = Object.fromEntries(formData.entries());
+            console.log("Datos enviados al backend:", datosFormulario);
 
-            const nombreformulario = formObject["nombreformulario"] as string;
-            const descripcion = formObject["descripcion"] as string;
+            await addFormulario(
+                datosFormulario.nombreformulario,
+                datosFormulario.descripcion,
+                datosFormulario.preguntas
+            );
 
-            // Extraer y estructurar las preguntas y respuestas
-            const preguntas: any[] = [];
-            for (const [key, value] of Object.entries(formObject)) {
-                const preguntaMatch = key.match(
-                    /^preguntas\[(\d+)\]\.pregunta$/
-                );
-
-                if (preguntaMatch) {
-                    const index = Number(preguntaMatch[1]);
-                    preguntas[index] = { pregunta: value, opciones: [] };
-                }
-                const respuestaMatch = key.match(
-                    /^preguntas\[(\d+)\]\.respuestas\[(\d+)\]\.(respuesta|esrespuesta)$/
-                );
-
-                if (respuestaMatch) {
-                    const [_, preguntaIndex, respuestaIndex, field] =
-                        respuestaMatch;
-
-                    const pIndex = Number(preguntaIndex);
-                    const rIndex = Number(respuestaIndex);
-
-                    if (!preguntas[pIndex]) {
-                        preguntas[pIndex] = { pregunta: "", opciones: [] }; // Asegurarse de que la pregunta exista
-                    }
-                    if (!preguntas[pIndex].opciones[rIndex]) {
-                        preguntas[pIndex].opciones[rIndex] = {
-                            textoopcion: "",
-                            esrespuesta: false,
-                        }; // Asegurarse de que la opción exista
-                    }
-
-                    if (field === "respuesta") {
-                        preguntas[pIndex].opciones[rIndex].textoopcion = value;
-                    } else if (field === "esrespuesta") {
-                        preguntas[pIndex].opciones[rIndex].esrespuesta =
-                            value === "true";
-                    }
-                }
-            }
-
-            try {
-                await addFormulario(nombreformulario, descripcion, preguntas);
-                navigate("/FormularioPage"); // Redirigir después de guardar
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
-            }
+            navigate("/FormularioPage");
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
         }
     };
 
     return (
         <>
-            <form className="pt-24" onSubmit={handleSubmit(handleGuardarClick)}>
-                <div className="flex flex-col gap-3 py-5 text-2xl ">
+            <form className="pt-24" onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col gap-3 py-5 text-2xl">
                     <input
-                        id="nombreformulario"
                         type="text"
                         {...register("nombreformulario", {
                             required: "Este campo es obligatorio",
@@ -112,11 +102,11 @@ export default function Formulario({
                     />
                     {errors.nombreformulario && (
                         <span className="text-red-600 text-center">
-                            {errors.nombreformulario.message as string}
+                            {errors.nombreformulario.message}
                         </span>
                     )}
+
                     <input
-                        id="descripcion"
                         type="text"
                         {...register("descripcion", {
                             required: "Este campo es obligatorio",
@@ -126,77 +116,59 @@ export default function Formulario({
                                 ? "border-red-600"
                                 : "border-gray-600"
                         } mx-auto rounded-lg focus:outline-none p-2 font-medium`}
-                        placeholder="Ingresar descripcion Formulario"
-                    ></input>
+                        placeholder="Ingresar descripción del formulario"
+                    />
                     {errors.descripcion && (
                         <span className="text-red-600 text-center">
-                            {errors.descripcion.message as string}
+                            {errors.descripcion.message}
                         </span>
                     )}
                 </div>
 
                 <div className="flex flex-col justify-center mt-10 space-y-5">
-                    {caja.map((pregunta, index) => (
+                    {preguntas.map((pregunta, index) => (
                         <CajaPregunta
                             key={pregunta.id}
-                            pregunta={pregunta}
-                            eliminarPregunta={eliminarPregunta}
+                            control={control}
+                            register={register}
+                            errors={errors}
                             preguntaIndex={index}
+                            eliminarPregunta={() => removePregunta(index)}
                         />
                     ))}
+
                     <button
                         type="button"
-                        className="flex justify-center lg:mx-[450px]
-                                mx-4
-                                h-16
-                                border-2 lg:p-1 
-                                bg-acento my-4 
-                                rounded-2xl 
-                                text-white 
-                                font-bold
-                                hover:bg-secundario1 
-                                hover:text-black"
-                        onClick={() => agregarPregunta()}
+                        className="flex justify-center lg:mx-[450px] mx-4 h-16 border-2 lg:p-1 bg-acento my-4 rounded-2xl text-white font-bold hover:bg-secundario1 hover:text-black"
+                        onClick={() =>
+                            addPregunta({
+                                pregunta: "",
+                                opciones: [
+                                    { textoopcion: "", esrespuesta: false },
+                                ],
+                            })
+                        }
                     >
                         <AgregarIcon />
                     </button>
                 </div>
 
-                <div className=" flex flex-col md:flex-row justify-center  md:gap-10">
+                <div className="flex flex-col md:flex-row justify-center md:gap-10">
                     <button
                         type="submit"
-                        className=" border-2 p-3 
-                        text-2xl
-                        bg-acento my-4 
-                        rounded-2xl 
-                        text-white 
-                        mx-4
-                        font-bold
-                      hover:bg-white
-                      hover:text-black
-                      hover: border-secundario1"
+                        className="border-2 p-3 text-2xl bg-acento my-4 rounded-2xl text-white mx-4 font-bold hover:bg-white hover:text-black"
                     >
                         Guardar
                     </button>
                     <button
                         type="button"
-                        className=" border-2 p-3 
-                            text-2xl
-                            bg-acento md:my-4 
-                            rounded-2xl 
-                            text-white 
-                            mx-4
-                            font-bold
-                            hover:bg-white
-                            hover:text-black
-                            hover: border-secundario1"
+                        className="border-2 p-3 text-2xl bg-acento my-4 rounded-2xl text-white mx-4 font-bold hover:bg-white hover:text-black"
                         onClick={openModal}
                     >
                         Cancelar
                     </button>
                 </div>
             </form>
-
             {isModalVisible && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">

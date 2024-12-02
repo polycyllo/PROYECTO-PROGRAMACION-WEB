@@ -1,5 +1,6 @@
 import Boton from "../../components/Boton";
 export default function CrearCuentaPage() {
+    //sin uso
     return (
         <section className="text-center grid justify-center">
             <h2 className="text-3xl font-bold my-10">Creando Cuenta</h2>

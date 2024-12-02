@@ -1,4 +1,32 @@
+import { useEffect, useState } from "react";
+import { getUserInfo } from "../../services/FormularioServices";
+import { Usuario } from "../../types";
+
 export default function PerfilPage() {
+    const [userData, setUserData] = useState<Usuario>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                setIsLoading(true);
+                const data = await getUserInfo();
+                //console.log("dataaa", data);
+                setUserData(data);
+            } catch (err) {
+                setError("Hubo un error al obtener los datos del usuario");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserData(); // Llamar a la función cuando el componente se monta
+    }, []);
+
+    if (isLoading) {
+        return <div>Cargando...</div>;
+    }
     return (
         <div className="h-screen flex justify-center mt-10 xs:mt-0">
             <div className=" mx-auto my-auto   w-[300px] xs:w-[335px] md:w-[600px] lg:w-[1000px] h-[580px] border-4 border-secundario1">
@@ -9,13 +37,18 @@ export default function PerfilPage() {
                         alt="Foto de perfil"
                         className="w-48 h-48 rounded-full border-4 "
                     />
-                    <p className="text-gray-400 text-xl">@NombreApellido</p>
+                    <p className="text-gray-400 text-xl">
+                        @{userData.nombre + " " + userData.apellido}
+                    </p>
                 </div>
                 <div className="space-y-4 mt-5">
-                    <ProfileField label="Nombre" value="nombrePA" />
-                    <ProfileField label="Apellido" value="apellidoPa" />
-                    <ProfileField label="Gmail" value="juan1ddd23@gmail.com" />
-                    <ProfileField label="Contraseña" value="********" />
+                    <ProfileField label="Nombre" value={userData.nombre} />
+                    <ProfileField label="Apellido" value={userData.apellido} />
+                    <ProfileField
+                        label="Gmail"
+                        value={userData.correoelectronico}
+                    />
+                    {/* <ProfileField label="Contraseña" value="********" /> */}
                 </div>
             </div>
         </div>
