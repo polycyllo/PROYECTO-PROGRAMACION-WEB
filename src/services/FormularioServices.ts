@@ -76,6 +76,25 @@ export async function getFormularioById(id: number) {
     }
 }
 
+export async function deleteForm(id: number) {
+    try {
+        const url = `${import.meta.env.VITE_APIT_URL}/api/formulario/${id}`;
+        const token = Cookies.get("authToken");
+
+        const { data } = await axios.delete(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
 export async function getUser() {
     try {
         const url = `${import.meta.env.VITE_APIT_URL}/api/auth/user`;

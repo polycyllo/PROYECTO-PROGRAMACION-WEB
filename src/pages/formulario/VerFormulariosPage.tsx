@@ -12,7 +12,6 @@ export default function VerFormulariosPage() {
     const formulario = useLoaderData() as Formulario[];
 
     if (!formulario || formulario.length === 0) {
-        // Muestra un mensaje si no hay formularios
         return (
             <div className="mt-32 text-center">
                 <p className="text-gray-600 text-lg">
@@ -32,6 +31,7 @@ export default function VerFormulariosPage() {
                         nombreformulario={form.nombreformulario}
                         descripcion={form.descripcion}
                         text="Ver más"
+                        mode="compartir"
                     />
                 ))}
             </div>
