@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { addFormulario } from "../services/FormularioServices";
+import Modal from "./Modal";
 
 type FormData = {
     nombreformulario: string;
     descripcion: string;
     preguntas: {
         pregunta: string;
+        tipopregunta: string;
+        esrespuesta: number[];
         opciones: {
             textoopcion: string;
             esrespuesta: boolean;
@@ -27,6 +30,7 @@ export default function Formulario() {
     const {
         register,
         control,
+        setValue,
         handleSubmit,
         formState: { errors },
     } = useForm<FormData>({
@@ -36,7 +40,9 @@ export default function Formulario() {
             preguntas: [
                 {
                     pregunta: "",
+                    tipopregunta: "",
                     opciones: [{ textoopcion: "", esrespuesta: false }],
+                    esrespuesta: [],
                 },
             ],
         },
@@ -56,16 +62,34 @@ export default function Formulario() {
     };
     const onSubmit = async (data: FormData) => {
         try {
-            console.log("Datos del formulario:", data);
+            const tamForm = data.preguntas.length;
+            if (tamForm == 0) {
+                alert("El formulario debe tener al menos una pregunta");
+                return;
+            }
+            const preguntasInvalidas = data.preguntas.filter((pregunta) => {
+                if (pregunta.tipopregunta === "circulo") {
+                    return pregunta.esrespuesta.length !== 1;
+                }
+                return false;
+            });
+
+            if (preguntasInvalidas.length > 0) {
+                alert(
+                    "Asegúrate de que todas las preguntas de tipo círculo tengan exactamente una respuesta seleccionada."
+                );
+                return;
+            }
 
             const datosFormulario = {
                 nombreformulario: data.nombreformulario,
                 descripcion: data.descripcion,
                 preguntas: data.preguntas.map((pregunta) => ({
                     pregunta: pregunta.pregunta,
-                    opciones: pregunta.opciones.map((opcion) => ({
+                    tipopregunta: pregunta.tipopregunta,
+                    opciones: pregunta.opciones.map((opcion, opcionIndex) => ({
                         textoopcion: opcion.textoopcion,
-                        esrespuesta: opcion.esrespuesta,
+                        esrespuesta: pregunta.esrespuesta.includes(opcionIndex),
                     })),
                 })),
             };
@@ -133,6 +157,7 @@ export default function Formulario() {
                             register={register}
                             errors={errors}
                             preguntaIndex={index}
+                            setValue={setValue}
                             eliminarPregunta={() => removePregunta(index)}
                         />
                     ))}
@@ -143,6 +168,8 @@ export default function Formulario() {
                         onClick={() =>
                             addPregunta({
                                 pregunta: "",
+                                tipopregunta: "",
+                                esrespuesta: [],
                                 opciones: [
                                     { textoopcion: "", esrespuesta: false },
                                 ],
@@ -170,27 +197,12 @@ export default function Formulario() {
                 </div>
             </form>
             {isModalVisible && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-                        <h2 className="text-2xl font-bold mb-4">
-                            ¿Estás seguro de que quieres cancelar?
-                        </h2>
-                        <div className="flex justify-end space-x-4">
-                            <button
-                                className="px-4 py-2 bg-acento text-white rounded-md hover:bg-red-600 font-bold"
-                                onClick={confirmCancel}
-                            >
-                                Sí, cancelar
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400 font-bold"
-                                onClick={closeModal}
-                            >
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <Modal
+                    texto="¿Estás seguro de que quieres cancelar?"
+                    textBoton="Sí, cancelar"
+                    confirm={confirmCancel}
+                    close={closeModal}
+                />
             )}
         </>
     );
