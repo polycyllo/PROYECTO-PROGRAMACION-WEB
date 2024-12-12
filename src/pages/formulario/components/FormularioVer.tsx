@@ -33,6 +33,10 @@ export default function FormularioVer({ codform }: CrearFomularioProps) {
         fetchFormulario();
     }, [codform]);
 
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
     const preguntas = formulario?.preguntas as PreguntaS[];
     return (
         <>

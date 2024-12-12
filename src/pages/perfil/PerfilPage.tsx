@@ -6,7 +6,7 @@ export default function PerfilPage() {
     const [userData, setUserData] = useState<Usuario>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    console.log(error);
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -21,7 +21,7 @@ export default function PerfilPage() {
             }
         };
 
-        fetchUserData(); // Llamar a la función cuando el componente se monta
+        fetchUserData();
     }, []);
 
     if (isLoading) {
@@ -30,10 +30,9 @@ export default function PerfilPage() {
     return (
         <div className="h-screen flex justify-center mt-10 xs:mt-0">
             <div className=" mx-auto my-auto   w-[300px] xs:w-[335px] md:w-[600px] lg:w-[1000px] h-[580px] border-4 border-secundario1">
-                {/*eliminar ese h-[600* talves*/}
                 <div className="flex flex-col items-center pt-5 space-y-3">
                     <img
-                        src="https://via.placeholder.com/150" // Aquí va la URL de la imagen de perfil del usuario
+                        src="https://via.placeholder.com/150"
                         alt="Foto de perfil"
                         className="w-48 h-48 rounded-full border-4 "
                     />

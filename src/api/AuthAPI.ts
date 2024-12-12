@@ -1,5 +1,5 @@
 import api from "../lib/axios";
-import axios, { isAxiosError } from "axios";
+import { isAxiosError } from "axios";
 import {
     ConfirmToken,
     RequestConfirmation,
