@@ -13,7 +13,6 @@ export default function RequestNewCode() {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm({ defaultValues: initialValues });
 

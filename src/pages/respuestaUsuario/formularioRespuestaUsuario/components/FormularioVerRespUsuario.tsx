@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FormularioCompleto, PreguntaS } from "../../../../types";
+import { PreguntaS } from "../../../../types";
 import { getFormularioRespondidoByToken } from "../../../../services/respuestaUsuarioServices";
 import RespuestaUsuario from "./RespuestaUsuario";
 type FormularioVerRespProps = {
@@ -30,8 +30,10 @@ export default function FormularioVerRespUsuario({
         fetchFormulario();
     }, [token]);
 
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
     const preguntas = formulario?.resultados as PreguntaS[];
-    console.log(preguntas);
     return (
         <>
             <section className="pt-24">

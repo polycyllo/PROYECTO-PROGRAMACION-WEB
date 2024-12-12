@@ -1,11 +1,6 @@
 import axios from "axios";
 
-import {
-    FormularioCSchema,
-    FormulariosSchema,
-    PreguntaS,
-    fechaRango,
-} from "../types";
+import { FormularioCSchema, FormulariosSchema } from "../types";
 import { safeParse } from "valibot";
 import Cookies from "js-cookie";
 import { isAxiosError } from "axios";
