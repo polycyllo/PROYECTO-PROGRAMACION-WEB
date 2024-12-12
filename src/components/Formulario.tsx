@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { addFormulario } from "../services/FormularioServices";
 import Modal from "./Modal";
-
+import { toast } from "react-toastify";
 type FormData = {
     nombreformulario: string;
     descripcion: string;
@@ -94,8 +94,8 @@ export default function Formulario() {
                 })),
             };
 
-            console.log("Datos enviados al backend:", datosFormulario);
-
+            //console.log("Datos enviados al backend:", datosFormulario);
+            toast.success("Formulario creado Correctamente");
             await addFormulario(
                 datosFormulario.nombreformulario,
                 datosFormulario.descripcion,
@@ -104,6 +104,7 @@ export default function Formulario() {
 
             navigate("/FormularioPage");
         } catch (error) {
+            toast.error("Error al crear formualrio");
             console.error("Error al enviar el formulario:", error);
         }
     };

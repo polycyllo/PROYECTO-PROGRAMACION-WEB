@@ -75,3 +75,8 @@ export const userSchema = Object({
     correoelectronico: string(),
 });
 export type Usuario = InferOutput<typeof userSchema>;
+
+export type fechaRango = {
+    fechainicio: string;
+    fechafin: string;
+};

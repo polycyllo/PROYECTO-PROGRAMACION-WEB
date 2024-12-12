@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "./modal";
-
+import Modal from "./Modal";
+import ModalCreateLink from "./ModalCreateLink";
 import { useDeleteForm } from "../hooks/useDeleteForm";
 type CardProps = {
     codformulario: number;
@@ -29,8 +29,13 @@ export default function Card({
         mutate(codformulario);
     };
     const [showModal, setShowModal] = useState(false);
+    const [showCreateLink, setShowCreateLink] = useState(false);
+    setShowCreateLink;
     const closeModal = () => {
         setShowModal(false);
+    };
+    const closeModalLink = () => {
+        setShowCreateLink(false);
     };
     return (
         <>
@@ -61,9 +66,24 @@ export default function Card({
                             </button>
                         )}
                         {mode === "compartir" && (
-                            <button className="bg-secundario1 font-semibold border-2 p-2 rounded-xl border-black hover:bg-acento text-white">
-                                Compartir
-                            </button>
+                            <>
+                                <button
+                                    className="bg-secundario1 font-semibold border-2 p-2 rounded-xl border-black hover:bg-acento text-white"
+                                    onClick={() => setShowCreateLink(true)}
+                                >
+                                    Compartir
+                                </button>
+                                <button
+                                    className="bg-secundario1 font-semibold border-2 p-2 rounded-xl border-black hover:bg-acento text-white"
+                                    onClick={() =>
+                                        navigate(
+                                            `/verRespuestasUsuarios/${codformulario}`
+                                        )
+                                    }
+                                >
+                                    Ver Respuestas de usuarios
+                                </button>
+                            </>
                         )}
                     </div>
                 </div>
@@ -74,6 +94,14 @@ export default function Card({
                     textBoton="Si, eliminar"
                     confirm={confirmDelete}
                     close={closeModal}
+                />
+            )}
+
+            {showCreateLink && (
+                <ModalCreateLink
+                    texto="Establece el rango de fechas"
+                    codformulario={codformulario}
+                    close={closeModalLink}
                 />
             )}
         </>
