@@ -38,7 +38,7 @@ export default function ModificarFormularioPage() {
                         codformulario={form.codformulario}
                         nombreformulario={form.nombreformulario}
                         descripcion={form.descripcion}
-                        text="Editar"
+                        text="Ver"
                         mode="modificar"
                     />
                 ))}

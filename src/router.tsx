@@ -14,6 +14,10 @@ import LoginView from "./pages/auth/LoginView";
 import RegisterView from "./pages/auth/RegisterView";
 import ConfirmAccount from "./pages/auth/ConfirmAccount";
 import RequestNewCode from "./pages/auth/RequestNewCode";
+import ResponderFormulario from "./pages/formulario/ResponderFormulario";
+import RespuestaUsuario from "./pages/respuestaUsuario/RespuestaUsuario";
+import FormularioRespuestaUsuario from "./pages/respuestaUsuario/formularioRespuestaUsuario/FormularioRespuestaUsuario";
+import ViewUsers from "./pages/admin/ViewUsers";
 
 export const router = createBrowserRouter([
     {
@@ -49,6 +53,22 @@ export const router = createBrowserRouter([
             {
                 path: "VerFormulario",
                 element: <VerFormularioPage />,
+            },
+            {
+                path: "/responder/:token",
+                element: <ResponderFormulario />,
+            },
+            {
+                path: "/verRespuestasUsuarios/:codformulario",
+                element: <RespuestaUsuario />,
+            },
+            {
+                path: "/formularioRespondido/:token",
+                element: <FormularioRespuestaUsuario />,
+            },
+            {
+                path: "/viewUsers",
+                element: <ViewUsers />,
             },
         ],
     },

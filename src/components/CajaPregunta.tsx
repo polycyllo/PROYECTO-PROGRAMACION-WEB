@@ -49,6 +49,7 @@ export default function CajaPregunta({
         control,
         name: `preguntas[${preguntaIndex}].tipopregunta`,
     });
+    console.log(tipopregunta);
     const esrespuesta =
         useWatch({
             control,
@@ -65,13 +66,14 @@ export default function CajaPregunta({
             setValue(`preguntas[${preguntaIndex}].esrespuesta`, nuevaRespuesta);
         }
     };
-
     return (
         <div className="caja mx-5 px-5 bg-[#00AFFF] rounded-xl">
             <div className="flex flex-row items-center justify-between">
                 <div className="w-full">
                     <div className="flex flex-row items-center gap-3 mt-3">
-                        <label className="font-bold">Tipo de pregunta:</label>
+                        <label className="font-bold text-xl">
+                            Seleccione tipo de pregunta:
+                        </label>
                         <select
                             {...register(
                                 `preguntas[${preguntaIndex}].tipopregunta`,
@@ -87,6 +89,9 @@ export default function CajaPregunta({
                             <option value="cuadrado">
                                 Múltiples respuestas
                             </option>
+                            <option value="texto">Solo texto</option>
+                            <option value="numeros">Solo numeros</option>
+                            <option value="textoLibre">Texto libre</option>
                         </select>
                         {errors.preguntas?.[preguntaIndex]?.tipopregunta && (
                             <ErrorMessage>
@@ -118,15 +123,18 @@ export default function CajaPregunta({
 
                 <div className="flex flex-row ml-3 mt-10 gap-1">
                     {/* Botón para agregar opciones */}
-                    <button
-                        type="button"
-                        className="border-2 p-[2.5px] bg-acento my-2 rounded-2xl text-white"
-                        onClick={() =>
-                            append({ textoopcion: "", esrespuesta: false })
-                        }
-                    >
-                        <EditarIcon />
-                    </button>
+                    {(tipopregunta === "circulo" ||
+                        tipopregunta === "cuadrado") && (
+                        <button
+                            type="button"
+                            className="border-2 p-[2.5px] bg-acento my-2 rounded-2xl text-white"
+                            onClick={() =>
+                                append({ textoopcion: "", esrespuesta: false })
+                            }
+                        >
+                            <EditarIcon />
+                        </button>
+                    )}
                     {/* Botón para eliminar la pregunta */}
                     <button
                         type="button"
@@ -151,7 +159,18 @@ export default function CajaPregunta({
                                 {...register(
                                     `preguntas[${preguntaIndex}].opciones[${opcionIndex}].textoopcion`,
                                     {
-                                        required: "La respuesta es obligatorio",
+                                        validate: (value) => {
+                                            if (
+                                                tipopregunta === "circulo" ||
+                                                tipopregunta === "cuadrado"
+                                            ) {
+                                                return (
+                                                    value.trim() !== "" ||
+                                                    "La respuesta es obligatoria"
+                                                );
+                                            }
+                                            return true;
+                                        },
                                     }
                                 )}
                                 className={`font-semibold text-1xl border ${
@@ -177,39 +196,47 @@ export default function CajaPregunta({
 
                         <div className="flex items-start">
                             <label className="ml-4 flex items-center gap-2 mt-2">
-                                <input
-                                    type={
-                                        tipopregunta === "circulo"
-                                            ? "radio"
-                                            : "checkbox"
-                                    }
-                                    checked={esrespuesta.includes(opcionIndex)}
-                                    onChange={() =>
-                                        toggleRespuesta(opcionIndex)
-                                    }
-                                    className={`appearance-none h-6 w-6 border-4 ${
-                                        tipopregunta === "circulo"
-                                            ? "rounded-full"
-                                            : "rounded-md"
-                                    } border-black checked:bg-white focus:outline-none`}
-                                />
+                                {(tipopregunta === "circulo" ||
+                                    tipopregunta === "cuadrado") && (
+                                    <input
+                                        type={
+                                            tipopregunta === "circulo"
+                                                ? "radio"
+                                                : "checkbox"
+                                        }
+                                        checked={esrespuesta.includes(
+                                            opcionIndex
+                                        )}
+                                        onChange={() =>
+                                            toggleRespuesta(opcionIndex)
+                                        }
+                                        className={`appearance-none h-6 w-6 border-4 ${
+                                            tipopregunta === "circulo"
+                                                ? "rounded-full"
+                                                : "rounded-md"
+                                        } border-black checked:bg-white focus:outline-none`}
+                                    />
+                                )}
                             </label>
 
-                            <button
-                                type="button"
-                                className="flex justify-center border-black p-2 bg-acento ml-3 rounded-lg text-white font-bold h-10 hover:bg-secundario1 hover:text-black "
-                                onClick={() => {
-                                    if (opciones.length > 1) {
-                                        remove(opcionIndex);
-                                    } else {
-                                        alert(
-                                            "Cada pregunta debe tener al menos una opción."
-                                        );
-                                    }
-                                }}
-                            >
-                                X
-                            </button>
+                            {(tipopregunta === "circulo" ||
+                                tipopregunta === "cuadrado") && (
+                                <button
+                                    type="button"
+                                    className="flex justify-center border-black p-2 bg-acento ml-3 rounded-lg text-white font-bold h-10 hover:bg-secundario1 hover:text-black "
+                                    onClick={() => {
+                                        if (opciones.length > 1) {
+                                            remove(opcionIndex);
+                                        } else {
+                                            alert(
+                                                "Cada pregunta debe tener al menos una opción."
+                                            );
+                                        }
+                                    }}
+                                >
+                                    X
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}
