@@ -1,5 +1,6 @@
 import api from "../lib/axios";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
+axios.defaults.withCredentials = true;
 import {
     ConfirmToken,
     RequestConfirmation,
@@ -45,7 +46,9 @@ export async function RequestConfirmationCode(formData: RequestConfirmation) {
 export async function loginUser(formData: UsuarioLogin) {
     try {
         const url = "/api/auth/login";
-        const { data } = await api.post<string>(url, formData);
+        const { data } = await api.post<string>(url, formData, {
+            withCredentials: true,
+        });
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
