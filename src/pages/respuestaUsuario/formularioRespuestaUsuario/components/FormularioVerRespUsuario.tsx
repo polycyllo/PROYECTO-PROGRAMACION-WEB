@@ -8,7 +8,7 @@ type FormularioVerRespProps = {
 export default function FormularioVerRespUsuario({
     token,
 }: FormularioVerRespProps) {
-    const [formulario, setFormulario] = useState<any | null>(null);
+    const [formulario, setFormulario] = useState<any | null> as any;
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

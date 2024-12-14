@@ -9,9 +9,8 @@ type CrearFomularioProps = {
 };
 
 export default function FormularioVer({ codform }: CrearFomularioProps) {
-    const [formulario, setFormulario] = useState<FormularioCompleto | null>(
-        null
-    );
+    const [formulario, setFormulario] =
+        useState<FormularioCompleto | null> as any;
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
