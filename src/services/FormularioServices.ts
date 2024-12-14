@@ -100,8 +100,15 @@ export async function deleteForm(id: number) {
 
 export async function getUser() {
     try {
+        const token = Cookies.get("authToken");
+
         const url = "/api/auth/user";
-        const { data } = await api.get(url);
+        const { data } = await api.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
