@@ -103,7 +103,7 @@ export async function getUser() {
         const token = Cookies.get("authToken");
 
         const url = "/api/auth/user";
-        const { data } = await api.get<string>(url, {
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
