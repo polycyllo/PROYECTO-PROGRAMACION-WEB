@@ -11,7 +11,6 @@ export default function Layout() {
     if (!data) {
         return <Navigate to="/auth/login" />;
     }
-
     return (
         <>
             <div>
