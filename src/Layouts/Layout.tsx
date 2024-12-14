@@ -7,7 +7,6 @@ export default function Layout() {
     const { data, isLoading } = useAuth() as any;
 
     if (isLoading) return "Cargando...";
-
     if (!data) {
         return <Navigate to="/auth/login" />;
     }
