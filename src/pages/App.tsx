@@ -1,15 +1,16 @@
 import { Boton1 } from "../components/Boton";
 import PreguntaRespuesta from "../components/PreguntaRespuesta";
 import { preguntaRespuesta } from "../data/bd";
-
+import { animation } from "../icons/animation";
 function App() {
+    const ani = animation();
     return (
         <>
-            <div className="flex justify-center bg-primario mt-14">
-                <img
-                    src="../public/ezzForm.jpg"
-                    className=" py-4 w-80 h-80 rounded shadow-md"
-                />
+            <div className="flex flex-col justify-center  mt-16 mx-auto">
+                {ani}
+                <h1 className="mt-2 text-3xl uppercase font-bold text-center">
+                    crea formularios!!!
+                </h1>
             </div>
             <div className="flex justify-center">
                 <Boton1 enlace="FormularioPage" titulo="empezar" />

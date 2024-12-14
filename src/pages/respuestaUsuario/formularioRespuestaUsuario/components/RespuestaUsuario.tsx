@@ -18,7 +18,7 @@ export default function RespuestaUsuario({ pregunta, tipopregunta }: any) {
                     cajaRespuesta.map((respuesta: any, index: number) => (
                         <div key={index} className="borde p-4 rounded-2xl flex">
                             <label
-                                className={`font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full flex justify-between ${
+                                className={`font-semibold text-1xl border border-gray-300 rounded-xl py-2 pl-4 w-full flex flex-col md:flex-row justify-between ${
                                     respuesta.esrespuesta &&
                                     respuesta.esSeleccionada
                                         ? "bg-green-400"

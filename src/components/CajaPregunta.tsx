@@ -49,7 +49,6 @@ export default function CajaPregunta({
         control,
         name: `preguntas[${preguntaIndex}].tipopregunta`,
     });
-    console.log(tipopregunta);
     const esrespuesta =
         useWatch({
             control,
@@ -69,8 +68,9 @@ export default function CajaPregunta({
     return (
         <div className="caja mx-5 px-5 bg-[#00AFFF] rounded-xl">
             <div className="flex flex-row items-center justify-between">
-                <div className="w-full">
-                    <div className="flex flex-row items-center gap-3 mt-3">
+                <div className="w-full ">
+                    <div></div>
+                    <div className="flex flex-col md:flex-row items-center gap-3 mt-3">
                         <label className="font-bold text-xl">
                             Seleccione tipo de pregunta:
                         </label>

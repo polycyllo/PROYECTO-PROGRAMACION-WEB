@@ -1,6 +1,5 @@
 import { FormularioCSchema, FormulariosSchema } from "../types";
 import { safeParse } from "valibot";
-import Cookies from "js-cookie";
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
 
@@ -29,14 +28,8 @@ export async function addFormulario(
 
 export async function getNameFormularios() {
     try {
-        const token = Cookies.get("authToken");
-
         const url = "/api/formulario";
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
 
         const result = safeParse(FormulariosSchema, data.data);
         if (result.success) {
@@ -51,14 +44,8 @@ export async function getNameFormularios() {
 
 export async function getFormularioById(id: number) {
     try {
-        const token = Cookies.get("authToken");
-
         const url = `/api/formulario/${id}`;
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
 
         const result = safeParse(FormularioCSchema, data.data);
         if (result.success) {
@@ -67,7 +54,6 @@ export async function getFormularioById(id: number) {
             console.log("error de byID");
             throw new Error("Hubo un error para obtener un form especifico");
         }
-        return data.data;
     } catch (error) {
         console.log(error);
     }
@@ -75,14 +61,8 @@ export async function getFormularioById(id: number) {
 
 export async function deleteForm(id: number) {
     try {
-        const token = Cookies.get("authToken");
-
         const url = `/api/formulario/${id}`;
-        const { data } = await api.delete(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.delete(url);
 
         return data;
     } catch (error) {

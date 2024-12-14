@@ -1,16 +1,10 @@
-import Cookies from "js-cookie";
 import { isAxiosError } from "axios";
 import api from "../lib/axios";
 
 export async function getLinksForm(codformulario: number) {
     try {
-        const token = Cookies.get("authToken");
         const url = `/api/linkform/${codformulario}/links`;
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -20,13 +14,8 @@ export async function getLinksForm(codformulario: number) {
 }
 export async function deleteLinkForm(id: number) {
     try {
-        const token = Cookies.get("authToken");
         const url = `/api/linkform/${id}/delete`;
-        const { data } = await api.delete(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.delete(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -37,13 +26,8 @@ export async function deleteLinkForm(id: number) {
 
 export async function getFormularioByToken(tokenUrl: string) {
     try {
-        const token = Cookies.get("authToken");
         const url = `/api/linkform/${tokenUrl}`;
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -54,13 +38,8 @@ export async function getFormularioByToken(tokenUrl: string) {
 
 export async function enviarRespuestas(tokenUrl: string, payload: any) {
     try {
-        const token = Cookies.get("authToken");
         const url = `/api/linkform/responder/${tokenUrl}`;
-        const { data } = await api.post(url, payload, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.post(url, payload);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
