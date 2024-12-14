@@ -5,7 +5,7 @@ import ModificarFormularioIcon from "../icons/modificarFormulario";
 import { useAuth } from "../hooks/useAuth";
 
 export default function FormularioPage() {
-    const { data } = useAuth();
+    const { data } = useAuth() as any;
     return (
         <div className=" flex mt-24 lg:mt-0 lg:items-center justify-center h-screen ">
             {data.rol === "user" ? (
