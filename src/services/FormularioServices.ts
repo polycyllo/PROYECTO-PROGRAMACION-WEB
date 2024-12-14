@@ -108,7 +108,6 @@ export async function getUser() {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
