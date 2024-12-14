@@ -9,9 +9,8 @@ import { useAuth } from "../../hooks/useAuth";
 export default function ResponderFormulario() {
     const [showModal, setShowModal] = useState(false);
     const { token } = useParams<{ token: string }>();
-    const [formulario, setFormulario] = useState<FormularioCompleto | null>(
-        null
-    );
+    const [formulario, setFormulario] =
+        useState<FormularioCompleto | null> as any;
     const [respuestas, setRespuestas] = useState<{
         [key: number]: {
             respuestasSeleccionadas?: number[]; // Opciones seleccionadas
