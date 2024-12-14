@@ -21,14 +21,8 @@ export async function addFormulario(
         preguntas,
     };
 
-    const token = Cookies.get("authToken");
-
     const url = "/api/formulario";
-    const response = await api.post(url, dataR, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    const response = await api.post(url, dataR);
 
     return response.data;
 }
@@ -100,14 +94,8 @@ export async function deleteForm(id: number) {
 
 export async function getUser() {
     try {
-        const token = Cookies.get("authToken");
-        console.log("valor token ", token);
         const url = "/api/auth/user";
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -118,14 +106,8 @@ export async function getUser() {
 
 export async function getUserInfo() {
     try {
-        const token = Cookies.get("authToken");
-
         const url = "/api/auth/user";
-        const { data } = await api.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.get(url);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -147,14 +129,8 @@ export async function createLinkForm(datas: {
             fechafin,
         };
 
-        const token = Cookies.get("authToken");
-
         const url = `/api/formulario/${codformulario}/compartir`;
-        const { data } = await api.post(url, fechas, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+        const { data } = await api.post(url, fechas);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
