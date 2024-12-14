@@ -5,10 +5,8 @@ export const useAuth = () => {
     const { data, isError, isLoading } = useQuery({
         queryKey: ["user"],
         queryFn: getUser,
-        retry: 1,
+        retry: 2,
         refetchOnWindowFocus: false,
     });
-    /*console.log("data desde useAtuh", data);
-    console.log("error", error);*/
     return { data, isError, isLoading };
 };

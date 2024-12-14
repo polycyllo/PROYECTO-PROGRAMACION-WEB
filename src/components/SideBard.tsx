@@ -1,18 +1,26 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { logoutService } from "../api/AuthAPI";
 export default function SideBard() {
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const logout = () => {
-        Cookies.remove("authToken");
-        queryClient.invalidateQueries({ queryKey: ["user"] });
-        localStorage.clear();
-        sessionStorage.clear();
-        navigate("/auth/login");
+
+    const logout = async () => {
+        try {
+            await logoutService();
+
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+
+            localStorage.clear();
+            sessionStorage.clear();
+            navigate("/auth/login");
+        } catch (error) {
+            console.error("Error cerrando sesión:", error);
+        }
     };
+
     return (
         <div className=" ">
             <button className="ml-4" onClick={() => setOpen(true)}>

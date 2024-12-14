@@ -54,3 +54,15 @@ export async function loginUser(formData: UsuarioLogin) {
         }
     }
 }
+
+export async function logoutService() {
+    try {
+        const url = "/api/auth/logout";
+        const { data } = await api.post<string>(url);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
