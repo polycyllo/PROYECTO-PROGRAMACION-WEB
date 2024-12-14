@@ -47,6 +47,7 @@ export async function loginUser(formData: UsuarioLogin) {
     try {
         const url = "/api/auth/login";
         const { data } = await api.post<string>(url, formData);
+        console.log("desde login ", data);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
