@@ -26,10 +26,12 @@ const server = express();
 
 const corsOptions: CorsOptions = {
     origin: function (origin, callback) {
+        console.log("origin ", origin);
         if (
             !origin ||
             origin === "http://localhost:5173" ||
-            origin === "http://26.156.22.45:5173"
+            origin === "http://26.156.22.45:5173" ||
+            origin === "https://proyecto-programacion-web-kappa.vercel.app"
         ) {
             callback(null, true);
         } else {

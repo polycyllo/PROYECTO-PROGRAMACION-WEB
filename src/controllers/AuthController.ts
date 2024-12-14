@@ -13,7 +13,6 @@ export class AuthController {
     static createAccount = async (req: Request, res: Response) => {
         try {
             const { contrasenia, correoelectronico } = req.body;
-            //Prevenir dup
             const userExist = await Usuario.findOne({
                 where: {
                     correoelectronico: correoelectronico,
@@ -35,7 +34,6 @@ export class AuthController {
                 codusuario: usuario.codusuario,
                 nombrerol: "user",
             });
-            //enviar email
             AuthEmail.sendConfirmationEmail({
                 correoelectronico: usuario.correoelectronico,
                 name: usuario.nombre + " " + usuario.apellido,
@@ -71,12 +69,13 @@ export class AuthController {
     static login = async (req: Request, res: Response) => {
         try {
             const { correoelectronico, contrasenia } = req.body;
-            console.log("Cookies recibidas:", req.cookies);
+
             const usuario = await Usuario.findOne({
                 where: {
                     correoelectronico: correoelectronico,
                 },
             });
+
             if (!usuario) {
                 const error = new Error("Usuario no encontrado");
                 return res.status(401).json({ error: error.message });
@@ -87,7 +86,6 @@ export class AuthController {
                 token.token = generateToken();
                 await token.save();
 
-                //enviar email
                 AuthEmail.sendConfirmationEmail({
                     correoelectronico: usuario.correoelectronico,
                     name: usuario.nombre + " " + usuario.apellido,
@@ -110,31 +108,45 @@ export class AuthController {
                 return res.status(401).json({ error: error.message });
             }
 
-            //const rol = await Rol.findByPk(usuario.codusuario);
             const token = generateJWT({
                 codusuario: usuario.codusuario,
-                //rol: rol.nombrerol || "user",
             });
 
             res.cookie("authToken", token, {
                 httpOnly: false,
-                secure: process.env.NODE_ENV === "production",
-                sameSite:
-                    process.env.NODE_ENV === "production" ? "strict" : "lax",
-                maxAge: 2 * 60 * 60 * 1000,
+                secure: false,
+                sameSite: "lax",
+                maxAge: 10 * 60 * 60 * 1000,
             });
-            //console.log("token ", token);
+            ///console.log("este es el token ", token);
             res.send(token);
         } catch (error) {
             res.status(500).json({ error: "hubo un error" });
         }
     };
 
+    static logout = async (req: Request, res: Response) => {
+        try {
+            res.clearCookie("authToken", {
+                httpOnly: false,
+                secure: false,
+                sameSite: "lax",
+            });
+            console.log("se eliminooooooooo");
+            return res
+                .status(200)
+                .json({ message: "Sesión cerrada con éxito" });
+        } catch (error) {
+            console.error("Error cerrando sesión:", error);
+            return res
+                .status(500)
+                .json({ error: "Hubo un error cerrando la sesión" });
+        }
+    };
     static requestConfirmationToken = async (req: Request, res: Response) => {
         try {
             const { correoelectronico } = req.body;
 
-            //este usuario tiene que existir
             const usuario = await Usuario.findOne({
                 where: {
                     correoelectronico: correoelectronico,
@@ -169,7 +181,6 @@ export class AuthController {
 
     static getUsuario = async (req: Request, res: Response) => {
         const user = req.user.dataValues;
-
         const rol = await Rol.findOne({
             where: {
                 codusuario: user.codusuario,
