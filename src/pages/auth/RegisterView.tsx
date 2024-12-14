@@ -34,7 +34,7 @@ export default function RegisterView() {
         },
     });
     const handleRegister = (formData: UsuarioRegistrationForm) => {
-        console.log(formData);
+        //console.log(formData);
         mutate(formData);
     };
     return (
