@@ -46,9 +46,7 @@ export async function RequestConfirmationCode(formData: RequestConfirmation) {
 export async function loginUser(formData: UsuarioLogin) {
     try {
         const url = "/api/auth/login";
-        const { data } = await api.post<string>(url, formData, {
-            withCredentials: true,
-        });
+        const { data } = await api.post<string>(url, formData);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

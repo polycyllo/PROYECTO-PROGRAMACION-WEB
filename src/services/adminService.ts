@@ -1,11 +1,11 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import api from "../lib/axios";
 
 export async function getAllUsers() {
     try {
-        const url = `${import.meta.env.VITE_APIT_URL}/api/admin/`;
         const token = Cookies.get("authToken");
-        const { data } = await axios(url, {
+        const url = "/api/admin/";
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

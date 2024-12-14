@@ -1,21 +1,16 @@
-import axios from "axios";
-
 import Cookies from "js-cookie";
 import { isAxiosError } from "axios";
+import api from "../lib/axios";
 
 export async function getLinksForm(codformulario: number) {
     try {
-        const url = `${
-            import.meta.env.VITE_APIT_URL
-        }/api/linkform/${codformulario}/links`;
         const token = Cookies.get("authToken");
-
-        const { data } = await axios.get(url, {
+        const url = `/api/linkform/${codformulario}/links`;
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -25,17 +20,13 @@ export async function getLinksForm(codformulario: number) {
 }
 export async function deleteLinkForm(id: number) {
     try {
-        const url = `${
-            import.meta.env.VITE_APIT_URL
-        }/api/linkform/${id}/delete`;
         const token = Cookies.get("authToken");
-
-        const { data } = await axios.delete(url, {
+        const url = `/api/linkform/${id}/delete`;
+        const { data } = await api.delete(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -46,15 +37,13 @@ export async function deleteLinkForm(id: number) {
 
 export async function getFormularioByToken(tokenUrl: string) {
     try {
-        const url = `${import.meta.env.VITE_APIT_URL}/api/linkform/${tokenUrl}`;
         const token = Cookies.get("authToken");
-
-        const { data } = await axios.get(url, {
+        const url = `/api/linkform/${tokenUrl}`;
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -65,17 +54,13 @@ export async function getFormularioByToken(tokenUrl: string) {
 
 export async function enviarRespuestas(tokenUrl: string, payload: any) {
     try {
-        const url = `${
-            import.meta.env.VITE_APIT_URL
-        }/api/linkform/responder/${tokenUrl}`;
         const token = Cookies.get("authToken");
-
-        const { data } = await axios.post(url, payload, {
+        const url = `/api/linkform/responder/${tokenUrl}`;
+        const { data } = await api.post(url, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

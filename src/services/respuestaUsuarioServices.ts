@@ -1,10 +1,10 @@
-import axios from "axios";
 import Cookies from "js-cookie";
+import api from "../lib/axios";
 export async function getRespuestasForm() {
     try {
-        const url = `${import.meta.env.VITE_APIT_URL}/api/formulario`;
         const token = Cookies.get("authToken");
-        const { data } = await axios(url, {
+        const url = "/api/formulario";
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -17,11 +17,9 @@ export async function getRespuestasForm() {
 
 export async function getRespuestasPorRango(codformulario: number) {
     try {
-        const url = `${
-            import.meta.env.VITE_APIT_URL
-        }/api/respuestas/usuarios/${codformulario}`;
         const token = Cookies.get("authToken");
-        const { data } = await axios(url, {
+        const url = `/api/respuestas/usuarios/${codformulario}`;
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -34,11 +32,9 @@ export async function getRespuestasPorRango(codformulario: number) {
 
 export async function getFormularioRespondidoByToken(tokenForm: string) {
     try {
-        const url = `${
-            import.meta.env.VITE_APIT_URL
-        }/api/respuestas/formulario/${tokenForm}`;
         const token = Cookies.get("authToken");
-        const { data } = await axios(url, {
+        const url = `/api/respuestas/formulario/${tokenForm}`;
+        const { data } = await api.get(url, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
