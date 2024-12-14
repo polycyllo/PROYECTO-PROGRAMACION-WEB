@@ -4,10 +4,11 @@ import { useAuth } from "../hooks/useAuth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Layout() {
-    const { data, isLoading } = useAuth();
+    const { data, isError, isLoading } = useAuth();
 
     if (isLoading) return "Cargando...";
-    if (!data) {
+
+    if (isError || !data) {
         return <Navigate to="/auth/login" />;
     }
 

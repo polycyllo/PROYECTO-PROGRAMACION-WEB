@@ -71,7 +71,7 @@ export default function ResponderFormulario() {
                       }, // Guarda opciones seleccionadas
         }));
     };
-    const currentUser = useAuth();
+    const currentUser = useAuth() as any;
     const handleSubmit = async () => {
         if (!currentUser) {
             alert("Usuario no autenticado.");
