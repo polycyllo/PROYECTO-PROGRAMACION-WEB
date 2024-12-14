@@ -9,6 +9,7 @@ import {
 import CerrarIcon from "../icons/cerrar";
 import EditarIcon from "../icons/editar";
 import ErrorMessage from "./ErrorMessage";
+import { useEffect } from "react";
 
 type PreguntaProps = {
     control: Control<any>;
@@ -65,12 +66,21 @@ export default function CajaPregunta({
             setValue(`preguntas[${preguntaIndex}].esrespuesta`, nuevaRespuesta);
         }
     };
+    useEffect(() => {
+        if (["texto", "numeros", "textoLibre"].includes(tipopregunta)) {
+            if (opciones.length > 1) {
+                setValue(`preguntas[${preguntaIndex}].opciones`, [
+                    opciones[0] || { textoopcion: "", esrespuesta: false },
+                ]);
+            }
+        }
+    }, [tipopregunta, opciones, setValue, preguntaIndex]);
     return (
         <div className="caja mx-5 px-5 bg-[#00AFFF] rounded-xl">
             <div className="flex flex-row items-center justify-between">
                 <div className="w-full ">
                     <div></div>
-                    <div className="flex flex-col md:flex-row items-center gap-3 mt-3">
+                    <div className="flex flex-col md:flex-row items-center gap-3 mt-3 w-[230px] md:w-auto">
                         <label className="font-bold text-xl">
                             Seleccione tipo de pregunta:
                         </label>
@@ -85,13 +95,17 @@ export default function CajaPregunta({
                             className="border border-gray-300 rounded-xl px-3 py-1 focus:outline-none mb-1"
                         >
                             <option value="">Seleccione</option>
-                            <option value="circulo">Una respuesta</option>
+                            <option value="circulo">{`Opcion multiple (circulo)`}</option>
                             <option value="cuadrado">
-                                Múltiples respuestas
+                                {`Opcion multiple (cuadrado)`}
                             </option>
-                            <option value="texto">Solo texto</option>
+                            <option value="texto">
+                                Solo texto sin caracteres
+                            </option>
                             <option value="numeros">Solo numeros</option>
-                            <option value="textoLibre">Texto libre</option>
+                            <option value="textoLibre">
+                                Texto libre, permite todo
+                            </option>
                         </select>
                         {errors.preguntas?.[preguntaIndex]?.tipopregunta && (
                             <ErrorMessage>
@@ -121,7 +135,7 @@ export default function CajaPregunta({
                     )}
                 </div>
 
-                <div className="flex flex-row ml-3 mt-10 gap-1">
+                <div className="flex flex-col md:flex-row ml-3 mt-10 gap-1">
                     {/* Botón para agregar opciones */}
                     {(tipopregunta === "circulo" ||
                         tipopregunta === "cuadrado") && (
