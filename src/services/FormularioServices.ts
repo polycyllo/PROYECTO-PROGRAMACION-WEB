@@ -101,7 +101,7 @@ export async function deleteForm(id: number) {
 export async function getUser() {
     try {
         const token = Cookies.get("authToken");
-
+        console.log("valor token ", token);
         const url = "/api/auth/user";
         const { data } = await api.get(url, {
             headers: {

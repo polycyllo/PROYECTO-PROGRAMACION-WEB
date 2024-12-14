@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../services/FormularioServices";
 export const useAuth = () => {
-    console.log("entro auth");
+    console.log("entro auth ");
     const { data, isError, isLoading } = useQuery({
         queryKey: ["user"],
         queryFn: getUser,
