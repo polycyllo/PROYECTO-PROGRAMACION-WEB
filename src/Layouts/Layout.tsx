@@ -1,16 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import { useAuth } from "../hooks/useAuth";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Layout() {
-    const { data, isLoading } = useAuth() as any;
-
-    if (isLoading) return "Cargando...";
-
-    if (!data) {
-        return <Navigate to="/auth/login" />;
-    }
+    //    const { data, isLoading } = useAuth() as any;
 
     return (
         <>
