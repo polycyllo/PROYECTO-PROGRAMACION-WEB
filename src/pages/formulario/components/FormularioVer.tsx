@@ -9,15 +9,16 @@ type CrearFomularioProps = {
 };
 
 export default function FormularioVer({ codform }: CrearFomularioProps) {
-    const [formulario, setFormulario] =
-        useState<FormularioCompleto | null> as any;
+    const [formulario, setFormulario] = useState<FormularioCompleto | null>(
+        null
+    );
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchFormulario = async () => {
             if (codform) {
                 try {
-                    const data = await getFormularioById(codform);
+                    const data = (await getFormularioById(codform)) as any;
                     setFormulario(data);
                 } catch (error) {
                     console.error("Error al obtener el formulario:", error);

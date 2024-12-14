@@ -9,8 +9,9 @@ import { useAuth } from "../../hooks/useAuth";
 export default function ResponderFormulario() {
     const [showModal, setShowModal] = useState(false);
     const { token } = useParams<{ token: string }>();
-    const [formulario, setFormulario] =
-        useState<FormularioCompleto | null> as any;
+    const [formulario, setFormulario] = useState<FormularioCompleto | null>(
+        null
+    );
     const [respuestas, setRespuestas] = useState<{
         [key: number]: {
             respuestasSeleccionadas?: number[]; // Opciones seleccionadas
@@ -26,7 +27,7 @@ export default function ResponderFormulario() {
                 if (!token) {
                     throw new Error("Token no proporcionado");
                 }
-                const data = await getFormularioByToken(token);
+                const data = (await getFormularioByToken(token)) as any;
 
                 const now = new Date();
                 const fechaini = new Date(data.fechainicio);
