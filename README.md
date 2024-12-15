@@ -21,30 +21,31 @@ ezzForm es una aplicación web diseñada para facilitar la creación de formular
 ## Imagenes de ezzForm
 
 -   Lado de un usurio normal
+
     ![inicio1](./imagenes/inicio1.PNG)
 
-    ![opcionesformularios](./imagenes/opcionesformularios.PNG)
+    ![opcionesformularios](./imagenes/opcionesformularios.png)
 
-    ![crearformulario](./imagenes/crearformulario.PNG)
+    ![crearformulario](./imagenes/crearformulario.png)
 
-    ![crearformulario2](./imagenes/crearformulario2.PNG)
+    ![crearformulario2](./imagenes/crearformulario2.png)
 
-    ![verformularios](./imagenes/verformularios.PNG)
+    ![verformularios](./imagenes/verformularios.png)
 
-    ![verformulario](./imagenes/verformulario.PNG)
+    ![verformulario](./imagenes/verformulario.png)
 
-    ![crearenlace](./imagenes/crearenlace.PNG)
+    ![crearenlace](./imagenes/crearenlace.png)
 
-    ![crearenlace2](./imagenes/crearenlace2.PNG)
+    ![crearenlace2](./imagenes/crearenlace2.png)
 
-    ![responderform](./imagenes/responderform.PNG)
+    ![responderform](./imagenes/responderform.png)
 
-    ![verrespuestas](./imagenes/verrespuestas.PNG)
+    ![verrespuestas](./imagenes/verrespuestas.png)
 
-    ![verrespuestas2](./imagenes/verrespuestas2.PNG)
+    ![verrespuestas2](./imagenes/verrespuestas2.png)
 
 -   Lado de un admin
-    ![admin](./imagenes/admin.PNG)
+    ![admin](./imagenes/admin.png)
 
 ## Diseño de la base de datos
 
