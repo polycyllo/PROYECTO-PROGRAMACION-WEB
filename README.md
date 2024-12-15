@@ -22,15 +22,25 @@ ezzForm es una aplicación web diseñada para facilitar la creación de formular
 
 -   Lado de un usurio normal
     ![inicio1](./imagenes/inicio1.PNG)
+
     ![opcionesformularios](./imagenes/opcionesformularios.PNG)
+
     ![crearformulario](./imagenes/crearformulario.PNG)
+
     ![crearformulario2](./imagenes/crearformulario2.PNG)
+
     ![verformularios](./imagenes/verformularios.PNG)
+
     ![verformulario](./imagenes/verformulario.PNG)
+
     ![crearenlace](./imagenes/crearenlace.PNG)
+
     ![crearenlace2](./imagenes/crearenlace2.PNG)
+
     ![responderform](./imagenes/responderform.PNG)
+
     ![verrespuestas](./imagenes/verrespuestas.PNG)
+
     ![verrespuestas2](./imagenes/verrespuestas2.PNG)
 
 -   Lado de un admin
@@ -66,7 +76,7 @@ Sigue estos pasos para instalar y ejecutar ezzForm en tu entorno local.
 
 6. crea un archivo .env en el backend (esto en caso de que no exista)
 
--   **Si quieres usar el backup de la base de datos deberas tener instalado PostgreSQL y recuperar los datos con el uso del backup que esta en la carpeta "baseDeDatosBackup" y luego añadir a lo siguiente al archivo .env**
+-   **Si quieres usar el backup de la base de datos deberas tener instalado PostgreSQL y recuperar los datos con el uso del backup que esta en la carpeta "baseDeDatosBackup", luego deberas ir a la carpeta src/config/db.ts y ahí leer la instruccion comentada y luego añadir a lo siguiente al archivo .env**
 
     -   DB_NAME=ezzForm #(depende del nombre que le des a la bd)
     -   DB_USER=postgres #(esto depende de tu usuario)
