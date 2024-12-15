@@ -14,3 +14,11 @@
 .caja {
     border: 1px solid #fbbc05;
 }
+
+.limit-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Muestra solo 3 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

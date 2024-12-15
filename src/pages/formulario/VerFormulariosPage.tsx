@@ -23,7 +23,7 @@ export default function VerFormulariosPage() {
 
     return (
         <div className="mt-32 ">
-            <div className="flex flex-wrap lg:mx-20 mx-16 lg:gap-24 gap-x-10 gap-y-10 lg:ml-[170px] 2xl:ml-20">
+            <div className="flex flex-wrap lg:mx-20 mx-10 lg:gap-24 gap-x-10 gap-y-10 lg:ml-[170px]">
                 {formulario.map((form) => (
                     <Card
                         key={form.codformulario}

@@ -39,18 +39,18 @@ export default function Card({
     };
     return (
         <>
-            <section className=" border-4 rounded-2xl border-black w-[300px] h-[400px] flex flex-col overflow-hidden">
+            <section className="border-4 rounded-2xl border-black w-[320px] min-h-[500px] flex flex-col overflow-hidden">
                 <div className="bg-[#FFA500] w-full h-[150px] border-b-4 border-black flex justify-center items-center">
                     <h1 className="text-center text-white text-2xl font-bold ">
                         {nombreformulario}
                     </h1>
                 </div>
 
-                <div className="w-full mt-3 h-[200px] flex flex-col  justify-center">
-                    <h1 className="text-center text-xl font-semibold ">
+                <div className="w-full mt-3 flex flex-col justify-start items-center px-4 py-8">
+                    <h1 className="text-center text-xl font-semibold limit-lines">
                         {descripcion}
                     </h1>
-                    <div className="mt-3 flex justify-center flex-col gap-2 mx-16">
+                    <div className="mt-3 flex flex-col gap-2 w-full">
                         <button
                             className="bg-secundario1 font-semibold border-2 p-2 rounded-xl border-black hover:bg-acento text-white"
                             onClick={() => handleR()}
@@ -88,6 +88,7 @@ export default function Card({
                     </div>
                 </div>
             </section>
+
             {showModal && (
                 <Modal
                     texto={`¿Estás seguro de que quieres eliminar el formulario: ${nombreformulario}?`}
