@@ -31,7 +31,7 @@ export default function ModificarFormularioPage() {
 
     return (
         <div className="mt-32">
-            <div className="flex flex-wrap mx-20 gap-24">
+            <div className="flex flex-wrap lg:mx-20 mx-10 lg:gap-24 gap-x-10 gap-y-10 lg:ml-[170px]">
                 {formularios.map((form) => (
                     <Card
                         key={form.codformulario}
